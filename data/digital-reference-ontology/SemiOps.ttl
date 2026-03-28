@@ -1,0 +1,1863 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3.org/2002/07/owl#> .
+
+[ rdf:type owl:Ontology
+ ] .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.w3id.org/ecsel-dr-SO#belongs_to_furnace_process
+<http://www.w3id.org/ecsel-dr-SO#belongs_to_furnace_process> rdf:type owl:ObjectProperty ;
+                                                             rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Planning_Work_Center> ;
+                                                             rdfs:range <http://www.w3id.org/ecsel-dr-SO#Furnace_Process> ;
+                                                             rdfs:label "belongs to furnace process"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#consists_of_tool
+<http://www.w3id.org/ecsel-dr-SO#consists_of_tool> rdf:type owl:ObjectProperty ;
+                                                   rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Planning_Work_Center> ;
+                                                   rdfs:range <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                   rdfs:label "consists of tool"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#dedicates_epa
+<http://www.w3id.org/ecsel-dr-SO#dedicates_epa> rdf:type owl:ObjectProperty ;
+                                                owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_dedicated_to_tool> ;
+                                                rdfs:label "dedicates epa"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_WIP_station
+<http://www.w3id.org/ecsel-dr-SO#has_WIP_station> rdf:type owl:ObjectProperty ;
+                                                  owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_WIP_station_of> ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Capacity> ;
+                                                  rdfs:range <http://www.w3id.org/ecsel-dr-SO#Work_In_Progress_Station> ;
+                                                  rdfs:label "has WIP station"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_bottleneck
+<http://www.w3id.org/ecsel-dr-SO#has_bottleneck> rdf:type owl:ObjectProperty ;
+                                                 owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_bottleneck_of> ;
+                                                 rdfs:range <http://www.w3id.org/ecsel-dr-SO#Bottleneck> ;
+                                                 rdfs:label "has bottleneck"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_current_WIP
+<http://www.w3id.org/ecsel-dr-SO#has_current_WIP> rdf:type owl:ObjectProperty ;
+                                                  owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_current_WIP> ;
+                                                  rdfs:domain <http://org.semanticweb.owlapi/error#Error385> ;
+                                                  rdfs:range <http://www.w3id.org/ecsel-dr-SO#Current_WIP> ;
+                                                  rdfs:label "has a current WIP"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_delivery_commitment
+<http://www.w3id.org/ecsel-dr-SO#has_delivery_commitment> rdf:type owl:ObjectProperty ;
+                                                          owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_delivery_commitment_of> ;
+                                                          rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Release_Plan> ;
+                                                          rdfs:range <http://www.w3id.org/ecsel-dr-SO#Delivery_Commitment> ;
+                                                          rdfs:label "has delivery commitment"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_demand
+<http://www.w3id.org/ecsel-dr-SO#has_demand> rdf:type owl:ObjectProperty ;
+                                             owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_demand_of> ;
+                                             rdfs:domain <http://org.semanticweb.owlapi/error#Error390> ,
+                                                         <http://www.w3id.org/ecsel-dr-SO#Product> ;
+                                             rdfs:range <http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot> ,
+                                                        <http://www.w3id.org/ecsel-dr-SO#Production_Request> ;
+                                             rdfs:label "has demand"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_equipment
+<http://www.w3id.org/ecsel-dr-SO#has_equipment> rdf:type owl:ObjectProperty ;
+                                                owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_equipment_of> ;
+                                                rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                rdfs:range <http://www.w3id.org/ecsel-dr-SO#Equipment> ;
+                                                rdfs:label "has equipment"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_equipment_group
+<http://www.w3id.org/ecsel-dr-SO#has_equipment_group> rdf:type owl:ObjectProperty ;
+                                                      owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_equipment_group_of> ;
+                                                      rdfs:domain <http://org.semanticweb.owlapi/error#Error380> ;
+                                                      rdfs:range <http://www.w3id.org/ecsel-dr-SO#Equipment_Group> ;
+                                                      rdfs:label "has equipment group"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_event_calendar
+<http://www.w3id.org/ecsel-dr-SO#has_event_calendar> rdf:type owl:ObjectProperty ;
+                                                     owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_event_calendar_of> ;
+                                                     rdfs:domain <http://org.semanticweb.owlapi/error#Error381> ;
+                                                     rdfs:range <http://www.w3id.org/ecsel-dr-SO#Event_Calendar> ;
+                                                     rdfs:label "has event calendar"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_fab
+<http://www.w3id.org/ecsel-dr-SO#has_fab> rdf:type owl:ObjectProperty ;
+                                          owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_fab_of> ;
+                                          rdfs:domain <http://org.semanticweb.owlapi/error#Error379> ;
+                                          rdfs:range <http://www.w3id.org/ecsel-dr-SO#Fab> ;
+                                          rdfs:label "has fab"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_lot
+<http://www.w3id.org/ecsel-dr-SO#has_lot> rdf:type owl:ObjectProperty ;
+                                          owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_lot_of> ;
+                                          rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                          rdfs:range <http://www.w3id.org/ecsel-dr-SO#Lot> ;
+                                          rdfs:label "has lot"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_lot_event
+<http://www.w3id.org/ecsel-dr-SO#has_lot_event> rdf:type owl:ObjectProperty ;
+                                                owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_lot_event_of> ;
+                                                rdfs:domain <http://org.semanticweb.owlapi/error#Error378> ;
+                                                rdfs:range <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                                rdfs:label "has lot event"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_lot_size
+<http://www.w3id.org/ecsel-dr-SO#has_lot_size> rdf:type owl:ObjectProperty ;
+                                               owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_lot_size_of> ;
+                                               rdfs:domain <http://org.semanticweb.owlapi/error#Error388> ;
+                                               rdfs:range <http://www.w3id.org/ecsel-dr-SO#Lot_Size> ;
+                                               rdfs:label "has lot size"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_operation
+<http://www.w3id.org/ecsel-dr-SO#has_operation> rdf:type owl:ObjectProperty ;
+                                                owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_operation_of> ;
+                                                rdfs:domain <http://org.semanticweb.owlapi/error#Error387> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Product> ;
+                                                rdfs:range <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                rdfs:label "has operation"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_owner
+<http://www.w3id.org/ecsel-dr-SO#has_owner> rdf:type owl:ObjectProperty ;
+                                            owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_owned_by> ;
+                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#EPA> ;
+                                            rdfs:range <http://www.w3id.org/ecsel-dr-SO#Owner> ;
+                                            rdfs:label "has owner"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_part_simulation_part
+<http://www.w3id.org/ecsel-dr-SO#has_part_simulation_part> rdf:type owl:ObjectProperty ;
+                                                           owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#simulation_part_is_part_of> ;
+                                                           rdfs:domain <http://org.semanticweb.owlapi/error#Error391> ;
+                                                           rdfs:range <http://www.w3id.org/ecsel-dr-SO#Simulation_Part> ;
+                                                           rdfs:label "has part"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_plant
+<http://www.w3id.org/ecsel-dr-SO#has_plant> rdf:type owl:ObjectProperty ;
+                                            owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_plant_of> ;
+                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Supply_Chain> ;
+                                            rdfs:range <http://www.w3id.org/ecsel-dr-SO#Plant> ;
+                                            rdfs:label "has plant"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_priority_class
+<http://www.w3id.org/ecsel-dr-SO#has_priority_class> rdf:type owl:ObjectProperty ;
+                                                     owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_priority_class_of> ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#EPA> ;
+                                                     rdfs:range <http://www.w3id.org/ecsel-dr-SO#Priority_Class> ;
+                                                     rdfs:label "has priority class"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_product_level
+<http://www.w3id.org/ecsel-dr-SO#has_product_level> rdf:type owl:ObjectProperty ;
+                                                    owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_product_level_of> ;
+                                                    rdfs:domain <http://org.semanticweb.owlapi/error#Error389> ;
+                                                    rdfs:range <http://www.w3id.org/ecsel-dr-SO#Product_Level> ;
+                                                    rdfs:label "has product level"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_product_number
+<http://www.w3id.org/ecsel-dr-SO#has_product_number> rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Process_Flow> ;
+                                                     rdfs:range <http://www.w3id.org/ecsel-dr-SO#Product_Number> ;
+                                                     rdfs:label "has product number"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_release_plan
+<http://www.w3id.org/ecsel-dr-SO#has_release_plan> rdf:type owl:ObjectProperty ;
+                                                   owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_release_plan_of> ;
+                                                   rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Delivery_Commitment> ;
+                                                   rdfs:range <http://www.w3id.org/ecsel-dr-SO#Release_Plan> ;
+                                                   rdfs:label "has release plan"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_route
+<http://www.w3id.org/ecsel-dr-SO#has_route> rdf:type owl:ObjectProperty ;
+                                            owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_route_of> ;
+                                            rdfs:domain <http://org.semanticweb.owlapi/error#Error384> ,
+                                                        <http://www.w3id.org/ecsel-dr-SO#Product_Level_3> ;
+                                            rdfs:range <http://www.w3id.org/ecsel-dr-SO#Route> ,
+                                                       <http://www.w3id.org/ecsel-dr-SO#Simulation_Route> ;
+                                            rdfs:label "has route"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_shift
+<http://www.w3id.org/ecsel-dr-SO#has_shift> rdf:type owl:ObjectProperty ;
+                                            owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_shift_of> ;
+                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Equipment_Group> ;
+                                            rdfs:range <http://www.w3id.org/ecsel-dr-SO#Shift> ;
+                                            rdfs:label "has shift"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_target_costs
+<http://www.w3id.org/ecsel-dr-SO#has_target_costs> rdf:type owl:ObjectProperty ;
+                                                   owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_target_costs_of> ;
+                                                   rdfs:domain <http://org.semanticweb.owlapi/error#Error383> ;
+                                                   rdfs:range <http://www.w3id.org/ecsel-dr-SO#Target_Costs> ;
+                                                   rdfs:label "has target costs"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_target_revenue
+<http://www.w3id.org/ecsel-dr-SO#has_target_revenue> rdf:type owl:ObjectProperty ;
+                                                     owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_target_revenue_of> ;
+                                                     rdfs:domain <http://org.semanticweb.owlapi/error#Error386> ;
+                                                     rdfs:range <http://www.w3id.org/ecsel-dr-SO#Target_Revenue> ;
+                                                     rdfs:label "has target revenue"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_technology
+<http://www.w3id.org/ecsel-dr-SO#has_technology> rdf:type owl:ObjectProperty ;
+                                                 owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_technology_of> ;
+                                                 rdfs:domain <http://org.semanticweb.owlapi/error#Error392> ,
+                                                             <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                 rdfs:range <http://www.w3id.org/ecsel-dr-SO#Technology> ;
+                                                 rdfs:label "has technology"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_time_constraints
+<http://www.w3id.org/ecsel-dr-SO#has_time_constraints> rdf:type owl:ObjectProperty ;
+                                                       owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_time_constraints_of> ;
+                                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                       rdfs:range <http://www.w3id.org/ecsel-dr-SO#Time_Constraints> ;
+                                                       rdfs:label "has time constraints"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#has_workshop
+<http://www.w3id.org/ecsel-dr-SO#has_workshop> rdf:type owl:ObjectProperty ;
+                                               owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#is_workshop_of> ;
+                                               rdfs:domain <http://org.semanticweb.owlapi/error#Error382> ;
+                                               rdfs:range <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                               rdfs:label "has workshop"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_WIP_station_of
+<http://www.w3id.org/ecsel-dr-SO#is_WIP_station_of> rdf:type owl:ObjectProperty ;
+                                                    rdfs:label "is WIP station of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_bottleneck_of
+<http://www.w3id.org/ecsel-dr-SO#is_bottleneck_of> rdf:type owl:ObjectProperty ;
+                                                   rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Bottleneck> ;
+                                                   rdfs:label "is bottleneck of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_current_WIP
+<http://www.w3id.org/ecsel-dr-SO#is_current_WIP> rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Current_WIP> ;
+                                                 rdfs:range <http://org.semanticweb.owlapi/error#Error377> ;
+                                                 rdfs:label "is current WIP"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_dedicated_to_tool
+<http://www.w3id.org/ecsel-dr-SO#is_dedicated_to_tool> rdf:type owl:ObjectProperty ;
+                                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#EPA> ;
+                                                       rdfs:range <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                       rdfs:label "is dedicated to tool"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_delivery_commitment_of
+<http://www.w3id.org/ecsel-dr-SO#is_delivery_commitment_of> rdf:type owl:ObjectProperty ;
+                                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Delivery_Commitment> ;
+                                                            rdfs:range <http://www.w3id.org/ecsel-dr-SO#Release_Plan> ;
+                                                            rdfs:label "is delivery commitment of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_demand_of
+<http://www.w3id.org/ecsel-dr-SO#is_demand_of> rdf:type owl:ObjectProperty ;
+                                               rdfs:label "is demand of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_equipment_group_of
+<http://www.w3id.org/ecsel-dr-SO#is_equipment_group_of> rdf:type owl:ObjectProperty ;
+                                                        rdfs:label "is equipment group of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_equipment_of
+<http://www.w3id.org/ecsel-dr-SO#is_equipment_of> rdf:type owl:ObjectProperty ;
+                                                  rdfs:label "is equipment of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_event_calendar_of
+<http://www.w3id.org/ecsel-dr-SO#is_event_calendar_of> rdf:type owl:ObjectProperty ;
+                                                       rdfs:label "is event calendar of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_fab_of
+<http://www.w3id.org/ecsel-dr-SO#is_fab_of> rdf:type owl:ObjectProperty ;
+                                            rdfs:label "is fab of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_lot_event_of
+<http://www.w3id.org/ecsel-dr-SO#is_lot_event_of> rdf:type owl:ObjectProperty ;
+                                                  rdfs:label "is lot event of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_lot_of
+<http://www.w3id.org/ecsel-dr-SO#is_lot_of> rdf:type owl:ObjectProperty ;
+                                            rdfs:label "is lot of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_lot_size_of
+<http://www.w3id.org/ecsel-dr-SO#is_lot_size_of> rdf:type owl:ObjectProperty ;
+                                                 rdfs:label "is lot size of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_manually_loaded_by
+<http://www.w3id.org/ecsel-dr-SO#is_manually_loaded_by> rdf:type owl:ObjectProperty ;
+                                                        owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#manually_loads> ;
+                                                        rdfs:label "is manually loaded by"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_needed_by_tool
+<http://www.w3id.org/ecsel-dr-SO#is_needed_by_tool> rdf:type owl:ObjectProperty ;
+                                                    owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#needs_purge> ;
+                                                    rdfs:label "is needed by tool"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_operation_of
+<http://www.w3id.org/ecsel-dr-SO#is_operation_of> rdf:type owl:ObjectProperty ;
+                                                  rdfs:label "is operation of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_owned_by
+<http://www.w3id.org/ecsel-dr-SO#is_owned_by> rdf:type owl:ObjectProperty ;
+                                              rdfs:label "is owned by"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_plant_of
+<http://www.w3id.org/ecsel-dr-SO#is_plant_of> rdf:type owl:ObjectProperty ;
+                                              rdfs:label "is plant of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_preceeded_by
+<http://www.w3id.org/ecsel-dr-SO#is_preceeded_by> rdf:type owl:ObjectProperty ;
+                                                  owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#preceeds> ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                  rdfs:range <http://www.w3id.org/ecsel-dr-SO#Time_Coupling> ;
+                                                  rdfs:label "is preceeded by"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_priority_class_of
+<http://www.w3id.org/ecsel-dr-SO#is_priority_class_of> rdf:type owl:ObjectProperty ;
+                                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Priority_Class> ;
+                                                       rdfs:range <http://www.w3id.org/ecsel-dr-SO#EPA> ;
+                                                       rdfs:label "is priority class of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_processed_by_tool
+<http://www.w3id.org/ecsel-dr-SO#is_processed_by_tool> rdf:type owl:ObjectProperty ;
+                                                       owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#processes> ;
+                                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#EPA> ;
+                                                       rdfs:range <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                       rdfs:label "is processed by"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_product_level_of
+<http://www.w3id.org/ecsel-dr-SO#is_product_level_of> rdf:type owl:ObjectProperty ;
+                                                      rdfs:label "is product level of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_release_plan_of
+<http://www.w3id.org/ecsel-dr-SO#is_release_plan_of> rdf:type owl:ObjectProperty ;
+                                                     rdfs:label "is release plan of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_required_by
+<http://www.w3id.org/ecsel-dr-SO#is_required_by> rdf:type owl:ObjectProperty ;
+                                                 owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#requires> ;
+                                                 rdfs:label "is required by"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_responsible_for_planning_work_center
+<http://www.w3id.org/ecsel-dr-SO#is_responsible_for_planning_work_center> rdf:type owl:ObjectProperty ;
+                                                                          rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operator> ;
+                                                                          rdfs:range <http://www.w3id.org/ecsel-dr-SO#Planning_Work_Center> ;
+                                                                          rdfs:label "is responsible for"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_robotically_loaded_by
+<http://www.w3id.org/ecsel-dr-SO#is_robotically_loaded_by> rdf:type owl:ObjectProperty ;
+                                                           owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#robotically_loads> ;
+                                                           rdfs:label "is robotically loaded by"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_route_of
+<http://www.w3id.org/ecsel-dr-SO#is_route_of> rdf:type owl:ObjectProperty ;
+                                              rdfs:label "is route of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_shift_of
+<http://www.w3id.org/ecsel-dr-SO#is_shift_of> rdf:type owl:ObjectProperty ;
+                                              rdfs:label "is shift of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_target_costs_of
+<http://www.w3id.org/ecsel-dr-SO#is_target_costs_of> rdf:type owl:ObjectProperty ;
+                                                     rdfs:label "is target costs of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_target_revenue_of
+<http://www.w3id.org/ecsel-dr-SO#is_target_revenue_of> rdf:type owl:ObjectProperty ;
+                                                       rdfs:label "is target revenue of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_technology_of
+<http://www.w3id.org/ecsel-dr-SO#is_technology_of> rdf:type owl:ObjectProperty ;
+                                                   rdfs:label "is technology of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_time_constraints_of
+<http://www.w3id.org/ecsel-dr-SO#is_time_constraints_of> rdf:type owl:ObjectProperty ;
+                                                         rdfs:label "is time constraints of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_unloaded_by
+<http://www.w3id.org/ecsel-dr-SO#is_unloaded_by> rdf:type owl:ObjectProperty ;
+                                                 owl:inverseOf <http://www.w3id.org/ecsel-dr-SO#unloads> ;
+                                                 rdfs:label "is unloaded by"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#is_workshop_of
+<http://www.w3id.org/ecsel-dr-SO#is_workshop_of> rdf:type owl:ObjectProperty ;
+                                                 rdfs:label "is workshop of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#manually_loads
+<http://www.w3id.org/ecsel-dr-SO#manually_loads> rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operator> ;
+                                                 rdfs:range <http://www.w3id.org/ecsel-dr-SO#Work_In_Progress_Station> ;
+                                                 rdfs:comment "the operator will load the wafer into the wip station and then the robot will load the wafers from the wip station to the tool" ;
+                                                 rdfs:label "manually loads"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#needs_purge
+<http://www.w3id.org/ecsel-dr-SO#needs_purge> rdf:type owl:ObjectProperty ;
+                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                              rdfs:range <http://www.w3id.org/ecsel-dr-SO#Purge> ;
+                                              rdfs:label "needs purge"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#preceeds
+<http://www.w3id.org/ecsel-dr-SO#preceeds> rdf:type owl:ObjectProperty ;
+                                           rdfs:label "preceeds"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#processes
+<http://www.w3id.org/ecsel-dr-SO#processes> rdf:type owl:ObjectProperty ;
+                                            rdfs:label "processes"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#requires
+<http://www.w3id.org/ecsel-dr-SO#requires> rdf:type owl:ObjectProperty ;
+                                           rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Mask> ;
+                                           rdfs:range <http://www.w3id.org/ecsel-dr-SO#Lithography> ;
+                                           rdfs:label "requires"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#robotically_loads
+<http://www.w3id.org/ecsel-dr-SO#robotically_loads> rdf:type owl:ObjectProperty ;
+                                                    rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Robot> ;
+                                                    rdfs:range <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                    rdfs:comment "the operator will load the wafer into the wip station and then the robot will load the wafers from the wip station to the tool" ;
+                                                    rdfs:label "robotically loads"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#simulation_part_is_part_of
+<http://www.w3id.org/ecsel-dr-SO#simulation_part_is_part_of> rdf:type owl:ObjectProperty ;
+                                                             rdfs:label "is part of"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#unloads
+<http://www.w3id.org/ecsel-dr-SO#unloads> rdf:type owl:ObjectProperty ;
+                                          rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operator> ;
+                                          rdfs:range <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                          rdfs:label "unloads"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#uses_one_or_more_technology
+<http://www.w3id.org/ecsel-dr-SO#uses_one_or_more_technology> rdf:type owl:ObjectProperty ;
+                                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Process> ;
+                                                              rdfs:range <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                                              rdfs:label "uses one or more technology"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.w3id.org/ecsel-dr-SO#WIP_costs_per_unit_and_time_unit
+<http://www.w3id.org/ecsel-dr-SO#WIP_costs_per_unit_and_time_unit> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Target_Costs> ;
+                                                                   rdfs:range xsd:integer ;
+                                                                   rdfs:comment "Target Costs: Capital bounding costs + Storage costs + Mean production costs of a unit of a certain technology and time unit"@en ;
+                                                                   rdfs:label "WIP costs per unit and time unit"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#capacity_loss
+<http://www.w3id.org/ecsel-dr-SO#capacity_loss> rdf:type owl:DatatypeProperty ;
+                                                rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Event_Calendar> ;
+                                                rdfs:range xsd:double ;
+                                                rdfs:comment "Calendar: Facility capacity loss in percent"@en ;
+                                                rdfs:label "capacity loss"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#chips_per_wafer
+<http://www.w3id.org/ecsel-dr-SO#chips_per_wafer> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Product_Level_3> ;
+                                                  rdfs:range xsd:integer ;
+                                                  rdfs:comment "Product Level 4: Number of chips on a wafer"@en ;
+                                                  rdfs:label "chips per wafer"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#customer_wish_time
+<http://www.w3id.org/ecsel-dr-SO#customer_wish_time> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot> ;
+                                                     rdfs:range xsd:dateTime ;
+                                                     rdfs:comment "PK; customer wish time of the demand entry" ;
+                                                     rdfs:label "customer wish time"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#cycle_time_commitment_ID
+<http://www.w3id.org/ecsel-dr-SO#cycle_time_commitment_ID> rdf:type owl:DatatypeProperty ;
+                                                           rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Cycle_Time_Committment> ;
+                                                           rdfs:range xsd:string ;
+                                                           rdfs:comment "Cycle Time Commitment: FK; Name of the product level 3"@en ;
+                                                           rdfs:label "cycle time commitment ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#cycle_time_committment
+<http://www.w3id.org/ecsel-dr-SO#cycle_time_committment> rdf:type owl:DatatypeProperty ;
+                                                         rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Cycle_Time_Committment> ;
+                                                         rdfs:range xsd:dateTime ;
+                                                         rdfs:comment "Cycle Time Commitment: Committed overall supply chain cycle time"@en ,
+                                                                      "length of, or element of the length of, a temporal extent expressed in seconds"@en ;
+                                                         rdfs:label "cycle time committment"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#delivery_commitment_ID
+<http://www.w3id.org/ecsel-dr-SO#delivery_commitment_ID> rdf:type owl:DatatypeProperty ;
+                                                         rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Delivery_Commitment> ;
+                                                         rdfs:range xsd:string ;
+                                                         rdfs:comment "Delivery Commitment: FK; Name of the product level 3"@en ;
+                                                         rdfs:label "delivery commitment ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#demand_due_date
+<http://www.w3id.org/ecsel-dr-SO#demand_due_date> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot> ;
+                                                  rdfs:range xsd:dateTime ;
+                                                  rdfs:comment "Demand: PK; Due Date of the demand entry"@en ;
+                                                  rdfs:label "demand due date"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#demand_quantity
+<http://www.w3id.org/ecsel-dr-SO#demand_quantity> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot> ;
+                                                  rdfs:range xsd:integer ;
+                                                  rdfs:comment "Demand: Demand amount"@en ;
+                                                  rdfs:label "demand quantity"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#demand_type
+<http://www.w3id.org/ecsel-dr-SO#demand_type> rdf:type owl:DatatypeProperty ;
+                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot> ;
+                                              rdfs:range xsd:string ;
+                                              rdfs:comment "Demand: PK; Demand forecast or real demand"@en ;
+                                              rdfs:label "demand type"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#development_timeout
+<http://www.w3id.org/ecsel-dr-SO#development_timeout> rdf:type owl:DatatypeProperty ;
+                                                      rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Development> ;
+                                                      rdfs:range xsd:decimal ;
+                                                      rdfs:comment "length of, or element of the length of, a temporal extent expressed in hours"@en ;
+                                                      rdfs:label "development timeout"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#enter_main_quantity
+<http://www.w3id.org/ecsel-dr-SO#enter_main_quantity> rdf:type owl:DatatypeProperty ;
+                                                      rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                                      rdfs:range xsd:integer ;
+                                                      rdfs:comment "Lot Event: Number of units in the lot (wafers / chips) when entered the event"@en ;
+                                                      rdfs:label "enter main quantity"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#enter_state
+<http://www.w3id.org/ecsel-dr-SO#enter_state> rdf:type owl:DatatypeProperty ;
+                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                          <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                              rdfs:range xsd:dateTime ;
+                                              rdfs:comment "Lot Event: Time state is entered"@en ,
+                                                           "Lot State: Time state is entered"@en ;
+                                              rdfs:label "enter state"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#equipment_group_ID
+<http://www.w3id.org/ecsel-dr-SO#equipment_group_ID> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Bottleneck> ,
+                                                                 <http://www.w3id.org/ecsel-dr-SO#Current_WIP> ,
+                                                                 <http://www.w3id.org/ecsel-dr-SO#Equipment_Group> ,
+                                                                 <http://www.w3id.org/ecsel-dr-SO#Lot_Size> ,
+                                                                 <http://www.w3id.org/ecsel-dr-SO#Material_Transfer_Matrix> ,
+                                                                 <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                     rdfs:range xsd:string ;
+                                                     rdfs:comment "Current WIP: PK; FK; Name of Equipment Group"@en ,
+                                                                  "Equipment Group: PK; Name of the Workshop"@en ,
+                                                                  "Equipment: FK; technical equipment group affiliation; FK to FabID"@en ,
+                                                                  "Material Transfer: FK; start Equipment Group of material transfer"@en ,
+                                                                  "Setup: FK; Name of equipment"@en ;
+                                                     rdfs:label "equipment group ID"@en ,
+                                                                "has equipment group ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#equipment_group_type
+<http://www.w3id.org/ecsel-dr-SO#equipment_group_type> rdf:type owl:DatatypeProperty ;
+                                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Equipment_Group> ;
+                                                       rdfs:range xsd:string ;
+                                                       rdfs:comment "Equipment Group: Refers to the technology used for the process tool: Lithography, Plasma Etching, Diffusion, Tester, Prober, etc."@en ;
+                                                       rdfs:label "equipment group type"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#event_calendar_type
+<http://www.w3id.org/ecsel-dr-SO#event_calendar_type> rdf:type owl:DatatypeProperty ;
+                                                      rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Event_Calendar> ;
+                                                      rdfs:range xsd:string ;
+                                                      rdfs:comment "Event Calendar: Type of event"@en ;
+                                                      rdfs:label "event calendar type"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#event_date
+<http://www.w3id.org/ecsel-dr-SO#event_date> rdf:type owl:DatatypeProperty ;
+                                             rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                             rdfs:range xsd:dateTime ;
+                                             rdfs:comment "Lot Event: Date event occurred (DD.MM.YYYY hh:mm:ss)"@en ;
+                                             rdfs:label "event date"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#event_name
+<http://www.w3id.org/ecsel-dr-SO#event_name> rdf:type owl:DatatypeProperty ;
+                                             rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                             rdfs:range xsd:string ;
+                                             rdfs:comment "Lot Event: Name of event that occurred to lot (Hold, Split, Merge, Scrap, etc.)"@en ;
+                                             rdfs:label "event name"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#fab_internal
+<http://www.w3id.org/ecsel-dr-SO#fab_internal> rdf:type owl:DatatypeProperty ;
+                                               rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Fab> ;
+                                               rdfs:range xsd:boolean ;
+                                               rdfs:comment "Fab: Does the fab belong to the company or to an external partner"@en ;
+                                               rdfs:label "fab internal"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#fab_pseudonym
+<http://www.w3id.org/ecsel-dr-SO#fab_pseudonym> rdf:type owl:DatatypeProperty ;
+                                                rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Equipment_Group> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Event_Calendar> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Fab> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Lot_Size> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Release_Plan> ;
+                                                rdfs:range xsd:string ;
+                                                rdfs:comment "Calendar: FK; Name of the facility"@en ,
+                                                             "Demand: PK; Fab where the demand appears"@en ,
+                                                             "Equipment Group: FK"@en ,
+                                                             "FK; Name of the facility"@en ,
+                                                             "Fab: PK; Name of the production unit"@en ,
+                                                             "Release Plan: FK; Name of fab quantity of product level 4 is released"@en ,
+                                                             "Workshop: FK; Name of the production unit"@en ;
+                                                rdfs:label "fab pseudonym"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#fab_type
+<http://www.w3id.org/ecsel-dr-SO#fab_type> rdf:type owl:DatatypeProperty ;
+                                           rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Fab> ;
+                                           rdfs:range xsd:string ;
+                                           rdfs:comment "Fab: Front End, Wafer Testing, Back End Assembly, Back End Final Test, …"@en ;
+                                           rdfs:label "fab type"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#fill_rate
+<http://www.w3id.org/ecsel-dr-SO#fill_rate> rdf:type owl:DatatypeProperty ;
+                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Target_Service_Level> ;
+                                            rdfs:range xsd:double ;
+                                            rdfs:comment "Target Service Level: Rate of demand that can be fulfilled"@en ;
+                                            rdfs:label "fill rate"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#finished_product_costs
+<http://www.w3id.org/ecsel-dr-SO#finished_product_costs> rdf:type owl:DatatypeProperty ;
+                                                         rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Target_Costs> ;
+                                                         rdfs:range xsd:integer ;
+                                                         rdfs:comment "Target Costs: Costs of a finished unit of a certain technology"@en ;
+                                                         rdfs:label "finished product costs"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#frequency
+<http://www.w3id.org/ecsel-dr-SO#frequency> rdf:type owl:DatatypeProperty ;
+                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Time_Coupling> ;
+                                            rdfs:range xsd:integer ;
+                                            rdfs:label "frequency"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#from_fab_ID
+<http://www.w3id.org/ecsel-dr-SO#from_fab_ID> rdf:type owl:DatatypeProperty ;
+                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Supply_Chain> ;
+                                              rdfs:range xsd:string ;
+                                              rdfs:comment "Supply Chain: FK; Source ID of supply chain edge"@en ;
+                                              rdfs:label "from fab ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#hot_timeout
+<http://www.w3id.org/ecsel-dr-SO#hot_timeout> rdf:type owl:DatatypeProperty ;
+                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Hot> ;
+                                              rdfs:range xsd:decimal ;
+                                              rdfs:comment "length of, or element of the length of, a temporal extent expressed in hours"@en ;
+                                              rdfs:label "hot timeout"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#leave_main_quantity
+<http://www.w3id.org/ecsel-dr-SO#leave_main_quantity> rdf:type owl:DatatypeProperty ;
+                                                      rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                                      rdfs:range xsd:integer ;
+                                                      rdfs:comment "Lot Event: Number of units in the lot (wafers / chips) when left the event (Important for splits, merges and scraps)"@en ;
+                                                      rdfs:label "leave main quantity"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#leave_state
+<http://www.w3id.org/ecsel-dr-SO#leave_state> rdf:type owl:DatatypeProperty ;
+                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                          <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                              rdfs:range xsd:dateTime ;
+                                              rdfs:comment "Lot Event: Time state is finished"@en ,
+                                                           "Lot State: Time state is finished"@en ;
+                                              rdfs:label "leave state"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#load_time_wait
+<http://www.w3id.org/ecsel-dr-SO#load_time_wait> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operator> ;
+                                                 rdfs:range xsd:decimal ;
+                                                 rdfs:comment "length of, or element of the length of, a temporal extent expressed in hours"@en ;
+                                                 rdfs:label "load time wait"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#lot_ID
+<http://www.w3id.org/ecsel-dr-SO#lot_ID> rdf:type owl:DatatypeProperty ;
+                                         rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Current_WIP> ,
+                                                     <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                     <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                         rdfs:range xsd:string ;
+                                         rdfs:comment "Current WIP: PK; FK; Name of Lot"@en ,
+                                                      "Lot Event: Name of the lot"@en ,
+                                                      "Lot ID: PK; Name of the lot"@en ;
+                                         rdfs:label "lot ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#lot_due_date
+<http://www.w3id.org/ecsel-dr-SO#lot_due_date> rdf:type owl:DatatypeProperty ;
+                                               rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot> ;
+                                               rdfs:range xsd:dateTime ;
+                                               rdfs:comment "Lot Event: Date customer needs the lot delivered (DD.MM.YYYY hh:mm:ss)"@en ,
+                                                            "Lot: Date customer needs the lot delivered (DD.MM.YYYY hh:mm:ss)"@en ;
+                                               rdfs:label "lot due date"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#lot_owner
+<http://www.w3id.org/ecsel-dr-SO#lot_owner> rdf:type owl:DatatypeProperty ;
+                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                        <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                            rdfs:range xsd:string ;
+                                            rdfs:label "lot owner"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#lot_size_amount
+<http://www.w3id.org/ecsel-dr-SO#lot_size_amount> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                              <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                                  rdfs:range xsd:integer ;
+                                                  rdfs:comment "Lot Event: Amount of units in the lot"@en ,
+                                                               "Lot: Amount of units in the lot"@en ;
+                                                  rdfs:label "lot size amount"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#lot_size_quantity
+<http://www.w3id.org/ecsel-dr-SO#lot_size_quantity> rdf:type owl:DatatypeProperty ;
+                                                    rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot_Size> ;
+                                                    rdfs:range xsd:string ;
+                                                    rdfs:comment "Lot Size: Standard (FE) or optimal (BE) lot size for respective PL3"@en ;
+                                                    rdfs:label "lot size quantity"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#max_WIP
+<http://www.w3id.org/ecsel-dr-SO#max_WIP> rdf:type owl:DatatypeProperty ;
+                                          rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Fab> ;
+                                          rdfs:range xsd:integer ;
+                                          rdfs:comment "Fab: Hard capacity restriction of process units (NULL if no restriction)"@en ;
+                                          rdfs:label "max WIP"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#max_throughput_per_week
+<http://www.w3id.org/ecsel-dr-SO#max_throughput_per_week> rdf:type owl:DatatypeProperty ;
+                                                          rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Equipment_Group> ;
+                                                          rdfs:range xsd:integer ;
+                                                          rdfs:comment "Maximum Throughput per week"@en ;
+                                                          rdfs:label "max throughput per week"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#mean_time_off_line
+<http://www.w3id.org/ecsel-dr-SO#mean_time_off_line> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                     rdfs:range xsd:decimal ;
+                                                     rdfs:comment "length of, or element of the length of, a temporal extent expressed in hours"@en ;
+                                                     rdfs:label "mean time off line"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#mean_time_to_failure
+<http://www.w3id.org/ecsel-dr-SO#mean_time_to_failure> rdf:type owl:DatatypeProperty ;
+                                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Event_Calendar> ;
+                                                       rdfs:range xsd:decimal ;
+                                                       rdfs:comment "length of, or element of the length of, a temporal extent expressed in seconds"@en ,
+                                                                    "mean time to failure - MTTF"@en ;
+                                                       rdfs:label "mean time to failure"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#mean_time_to_failure_distribution
+<http://www.w3id.org/ecsel-dr-SO#mean_time_to_failure_distribution> rdf:type owl:DatatypeProperty ;
+                                                                    rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Event_Calendar> ;
+                                                                    rdfs:range xsd:string ;
+                                                                    rdfs:label "mean time to failure distribution"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#mean_time_to_repair
+<http://www.w3id.org/ecsel-dr-SO#mean_time_to_repair> rdf:type owl:DatatypeProperty ;
+                                                      rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Event_Calendar> ;
+                                                      rdfs:range xsd:decimal ;
+                                                      rdfs:comment "length of, or element of the length of, a temporal extent expressed in seconds"@en ,
+                                                                   "mean time to repair - MTTR"@en ;
+                                                      rdfs:label "mean time to repair"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#mean_time_to_repair_distribution
+<http://www.w3id.org/ecsel-dr-SO#mean_time_to_repair_distribution> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Event_Calendar> ;
+                                                                   rdfs:range xsd:string ;
+                                                                   rdfs:label "mean time to repair distribution"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#number_of_parallel_tools
+<http://www.w3id.org/ecsel-dr-SO#number_of_parallel_tools> rdf:type owl:DatatypeProperty ;
+                                                           rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Equipment_Group> ;
+                                                           rdfs:range xsd:integer ;
+                                                           rdfs:label "number of parallel tools"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#number_of_products
+<http://www.w3id.org/ecsel-dr-SO#number_of_products> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Time_Coupling> ;
+                                                     rdfs:range xsd:integer ;
+                                                     rdfs:label "number of products"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#operation_ID
+<http://www.w3id.org/ecsel-dr-SO#operation_ID> rdf:type owl:DatatypeProperty ;
+                                               rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ,
+                                                           <http://www.w3id.org/ecsel-dr-SO#Route> ;
+                                               rdfs:range xsd:string ;
+                                               rdfs:comment "FK; Name of operation"@en ;
+                                               rdfs:label "operation ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#operation_critical
+<http://www.w3id.org/ecsel-dr-SO#operation_critical> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                     rdfs:range xsd:boolean ;
+                                                     rdfs:comment "Operation: Is the Operation critical in terms of SC planning (a Bottleneck) or not?"@en ;
+                                                     rdfs:label "operation critical"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#operation_name
+<http://www.w3id.org/ecsel-dr-SO#operation_name> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                 rdfs:range xsd:string ;
+                                                 rdfs:label "operation name"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#p_time_per_unit
+<http://www.w3id.org/ecsel-dr-SO#p_time_per_unit> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                  rdfs:range xsd:decimal ;
+                                                  rdfs:comment "Operation: Capacity consuming / relevant equipment processing time"@en ,
+                                                               "length of, or element of the length of, a temporal extent expressed in seconds"@en ;
+                                                  rdfs:label "p time per unit"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#parent_lot_event
+<http://www.w3id.org/ecsel-dr-SO#parent_lot_event> rdf:type owl:DatatypeProperty ;
+                                                   rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                                   rdfs:range xsd:string ;
+                                                   rdfs:comment "Lot Event: FK; Name of ancestor lot event (important to rebuild the lot history)"@en ;
+                                                   rdfs:label "parent lot event"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#plant_ID
+<http://www.w3id.org/ecsel-dr-SO#plant_ID> rdf:type owl:DatatypeProperty ;
+                                           rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Fab> ;
+                                           rdfs:range xsd:string ;
+                                           rdfs:comment "Fab: FK; Geographical location"@en ,
+                                                        "Plant: PK; Will generally refer to the geographical location of the plant"@en ;
+                                           rdfs:label "plant ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#plant_internal
+<http://www.w3id.org/ecsel-dr-SO#plant_internal> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Plant> ;
+                                                 rdfs:range xsd:boolean ;
+                                                 rdfs:comment "Plant: Does the plant belong to the company or to an external partner"@en ;
+                                                 rdfs:label "plant internal"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#plant_name
+<http://www.w3id.org/ecsel-dr-SO#plant_name> rdf:type owl:DatatypeProperty ;
+                                             rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Plant> ;
+                                             rdfs:range xsd:string ;
+                                             rdfs:comment "Plant: Will generally refer to the geographical location of the plant"@en ;
+                                             rdfs:label "plant name"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#priority
+<http://www.w3id.org/ecsel-dr-SO#priority> rdf:type owl:DatatypeProperty ;
+                                           rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                       <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                           rdfs:range xsd:integer ;
+                                           rdfs:comment "Current WIP: Priority of the lot"@en ;
+                                           rdfs:label "priority"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#processing_time_distribution
+<http://www.w3id.org/ecsel-dr-SO#processing_time_distribution> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                               rdfs:range xsd:string ;
+                                                               rdfs:label "processing time distribution"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#product_level_2_ID
+<http://www.w3id.org/ecsel-dr-SO#product_level_2_ID> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Product_Level_2> ,
+                                                                 <http://www.w3id.org/ecsel-dr-SO#Product_Level_3> ;
+                                                     rdfs:range xsd:string ;
+                                                     rdfs:comment "Product Level 2: PK; Name of the product in level 2"@en ,
+                                                                  "Product Level 3: FK; Assignment of product to second product aggregation level"@en ;
+                                                     rdfs:label "product level 2 ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#product_level_3
+<http://www.w3id.org/ecsel-dr-SO#product_level_3> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                              <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                                  rdfs:range xsd:string ;
+                                                  rdfs:comment "Lot Event: FK; Name of product level 3 lot belongs to"@en ,
+                                                               "Lot: FK; Name of product level 3 lot belongs to"@en ;
+                                                  rdfs:label "product level 3"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#product_level_3_pseudonym
+<http://www.w3id.org/ecsel-dr-SO#product_level_3_pseudonym> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Bottleneck> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Cycle_Time_Committment> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Delivery_Commitment> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Lot_Size> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Operation> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Product_Level_3> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Release_Plan> ,
+                                                                        <http://www.w3id.org/ecsel-dr-SO#Route> ;
+                                                            rdfs:range xsd:string ;
+                                                            rdfs:comment "Demand: PK; Associated PL3"@en ,
+                                                                         "Product Level 3: PK; Name of the product in level 3"@en ,
+                                                                         "Product Level 4: FK; Assignment of product to first product aggregation level"@en ;
+                                                            rdfs:label "product level 3 pseudonym"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#purge_duration
+<http://www.w3id.org/ecsel-dr-SO#purge_duration> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Purge> ;
+                                                 rdfs:range xsd:decimal ;
+                                                 rdfs:comment "length of, or element of the length of, a temporal extent expressed in hours"@en ;
+                                                 rdfs:label "purge duration"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#release_plan_ID
+<http://www.w3id.org/ecsel-dr-SO#release_plan_ID> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Release_Plan> ;
+                                                  rdfs:range xsd:string ;
+                                                  rdfs:comment "Release Plan: FK; Name of the product level 3"@en ;
+                                                  rdfs:label "release plan ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#residual_time_in_fab
+<http://www.w3id.org/ecsel-dr-SO#residual_time_in_fab> rdf:type owl:DatatypeProperty ;
+                                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Current_WIP> ;
+                                                       rdfs:range xsd:decimal ;
+                                                       rdfs:comment "Current WIP: Expected residual time lot spends in current Fab (FE/BE)"@en ,
+                                                                    "length of, or element of the length of, a temporal extent expressed in seconds"@en ;
+                                                       rdfs:label "residual time in fab"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#revenue_per_unit
+<http://www.w3id.org/ecsel-dr-SO#revenue_per_unit> rdf:type owl:DatatypeProperty ;
+                                                   rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Target_Revenue> ;
+                                                   rdfs:range xsd:integer ;
+                                                   rdfs:comment "Target Revenue: Revenue per unit of a certain technology"@en ;
+                                                   rdfs:label "revenue per unit"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#rework_operation
+<http://www.w3id.org/ecsel-dr-SO#rework_operation> rdf:type owl:DatatypeProperty ;
+                                                   rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                   rdfs:range xsd:string ;
+                                                   rdfs:comment "Operation: [FK] Rework Operation, if needed"@en ;
+                                                   rdfs:label "rework operation"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#rework_probability_lots
+<http://www.w3id.org/ecsel-dr-SO#rework_probability_lots> rdf:type owl:DatatypeProperty ;
+                                                          rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                          rdfs:range xsd:double ;
+                                                          rdfs:comment "Operation: Probability of rework-tested full lots to be reworked"@en ;
+                                                          rdfs:label "rework probability lots"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#rework_probability_wafers
+<http://www.w3id.org/ecsel-dr-SO#rework_probability_wafers> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                            rdfs:range xsd:double ;
+                                                            rdfs:comment "Operation: Probability of rework-tested wafers to be reworked"@en ;
+                                                            rdfs:label "rework probability wafers"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#rework_test
+<http://www.w3id.org/ecsel-dr-SO#rework_test> rdf:type owl:DatatypeProperty ;
+                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                              rdfs:range xsd:boolean ;
+                                              rdfs:comment "Operation: Are the processed lots tested for rework?"@en ;
+                                              rdfs:label "rework test"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#robot_loading_time
+<http://www.w3id.org/ecsel-dr-SO#robot_loading_time> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                     rdfs:range xsd:decimal ;
+                                                     rdfs:comment "length of, or element of the length of, a temporal extent expressed in hours"@en ;
+                                                     rdfs:label "robot loading time"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#robot_unloading_time
+<http://www.w3id.org/ecsel-dr-SO#robot_unloading_time> rdf:type owl:DatatypeProperty ;
+                                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                       rdfs:range xsd:decimal ;
+                                                       rdfs:comment "length of, or element of the length of, a temporal extent expressed in hours"@en ;
+                                                       rdfs:label "robot unloading time"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#route_name
+<http://www.w3id.org/ecsel-dr-SO#route_name> rdf:type owl:DatatypeProperty ;
+                                             rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Product_Level_3> ,
+                                                         <http://www.w3id.org/ecsel-dr-SO#Route> ;
+                                             rdfs:range xsd:string ;
+                                             rdfs:comment "Name of route (usually equals product names requiring the route)"@en ;
+                                             rdfs:label "route name"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#route_position
+<http://www.w3id.org/ecsel-dr-SO#route_position> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Lot> ,
+                                                             <http://www.w3id.org/ecsel-dr-SO#Lot_Event> ;
+                                                 rdfs:range xsd:integer ;
+                                                 rdfs:comment "Lot Event: FK; Sequential number of the operation lot has entered"@en ,
+                                                              "Lot: FK; Sequential number of the operation lot has entered"@en ;
+                                                 rdfs:label "route position"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#sampling_rate
+<http://www.w3id.org/ecsel-dr-SO#sampling_rate> rdf:type owl:DatatypeProperty ;
+                                                rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                rdfs:range xsd:double ;
+                                                rdfs:comment "Sampling Rate: Execution rate of operation If operation is mandatory sampling rate is 1 (1- sampling rate = skipping rate of optional operation)"@en ;
+                                                rdfs:label "sampling rate"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#scrapping_probability_lots
+<http://www.w3id.org/ecsel-dr-SO#scrapping_probability_lots> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                             rdfs:range xsd:double ;
+                                                             rdfs:comment "Operation: Probability of scrapping-tested full lots to be scrapped"@en ;
+                                                             rdfs:label "scrapping probability lots"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#scrapping_probability_wafers
+<http://www.w3id.org/ecsel-dr-SO#scrapping_probability_wafers> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                               rdfs:range xsd:double ;
+                                                               rdfs:comment "Operation: Probability of scrapping-tested wafers to be scrapped"@en ;
+                                                               rdfs:label "scrapping probability wafers"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#scrapping_test
+<http://www.w3id.org/ecsel-dr-SO#scrapping_test> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                 rdfs:range xsd:boolean ;
+                                                 rdfs:comment "Operation: Are the processed lots tested for scrapping?"@en ;
+                                                 rdfs:label "scrapping test"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#sequence_number
+<http://www.w3id.org/ecsel-dr-SO#sequence_number> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Route> ;
+                                                  rdfs:range xsd:integer ;
+                                                  rdfs:comment "Lot Event: FK; Sequential number of the operation lot has entered"@en ,
+                                                               "Lot State: FK; Sequential number of the operation lot has entered"@en ,
+                                                               "Route: PK; Sequential number of operations along the route"@en ;
+                                                  rdfs:label "sequence number"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#shift_ID
+<http://www.w3id.org/ecsel-dr-SO#shift_ID> rdf:type owl:DatatypeProperty ;
+                                           rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Equipment_Group> ,
+                                                       <http://www.w3id.org/ecsel-dr-SO#Shift> ;
+                                           rdfs:range xsd:string ;
+                                           rdfs:comment "Shift: PK; Name of shift"@en ;
+                                           rdfs:label "shift ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#split_lot_chips
+<http://www.w3id.org/ecsel-dr-SO#split_lot_chips> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                  rdfs:range xsd:integer ;
+                                                  rdfs:comment "split into lots with # chips, added due to data import" ;
+                                                  rdfs:label "split lot chips"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#split_lots
+<http://www.w3id.org/ecsel-dr-SO#split_lots> rdf:type owl:DatatypeProperty ;
+                                             rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                             rdfs:range xsd:integer ;
+                                             rdfs:comment "Split into # lots, added due to data import" ;
+                                             rdfs:label "split lots"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#stock_out_probability
+<http://www.w3id.org/ecsel-dr-SO#stock_out_probability> rdf:type owl:DatatypeProperty ;
+                                                        rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Target_Service_Level> ;
+                                                        rdfs:range xsd:double ;
+                                                        rdfs:comment "Target service level: Probability that customer demand cannot be fulfilled"@en ;
+                                                        rdfs:label "stock out probability"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#supply_chain_ID
+<http://www.w3id.org/ecsel-dr-SO#supply_chain_ID> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Technology> ;
+                                                  rdfs:range xsd:string ;
+                                                  rdfs:comment "Technology: FK; Assignment of technology to supply chain"@en ;
+                                                  rdfs:label "supply chain ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#supply_chain_name
+<http://www.w3id.org/ecsel-dr-SO#supply_chain_name> rdf:type owl:DatatypeProperty ;
+                                                    rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Supply_Chain> ;
+                                                    rdfs:range xsd:string ;
+                                                    rdfs:comment "Supply Chain: Name of the supply chain"@en ;
+                                                    rdfs:label "supply chain name"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#target_service_level_beta
+<http://www.w3id.org/ecsel-dr-SO#target_service_level_beta> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Target_Service_Level> ;
+                                                            rdfs:range xsd:double ;
+                                                            rdfs:comment "Target Service Level: Target beta service level (Rate of demand to be fulfilled without delay)"@en ;
+                                                            rdfs:label "target service level beta"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#technology_ID
+<http://www.w3id.org/ecsel-dr-SO#technology_ID> rdf:type owl:DatatypeProperty ;
+                                                rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Product_Level_2> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Target_Costs> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Target_Revenue> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Target_Service_Level> ,
+                                                            <http://www.w3id.org/ecsel-dr-SO#Technology> ;
+                                                rdfs:range xsd:string ;
+                                                rdfs:comment "Target Costs: FK; Name of the technology"@en ,
+                                                             "Target Revenue: FK; Name of the technology"@en ,
+                                                             "Target Service Level: FK; Name of the technology"@en ,
+                                                             "Technology ID: FK; Assignment of product to highest product aggregation level (technology)"@en ,
+                                                             "Technology ID: FK; Name of the technology"@en ,
+                                                             "Technology: PK; Name of the technology"@en ;
+                                                rdfs:label "technology ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#to_equipment_group_ID
+<http://www.w3id.org/ecsel-dr-SO#to_equipment_group_ID> rdf:type owl:DatatypeProperty ;
+                                                        rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Material_Transfer_Matrix> ;
+                                                        rdfs:range xsd:string ;
+                                                        rdfs:comment "Material Transfer: FK; target EquipmentGroup of transfer"@en ;
+                                                        rdfs:label "to equipment group ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#to_fab_ID
+<http://www.w3id.org/ecsel-dr-SO#to_fab_ID> rdf:type owl:DatatypeProperty ;
+                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Supply_Chain> ;
+                                            rdfs:range xsd:string ;
+                                            rdfs:comment "Supply Chain: FK; Sink ID of supply chain edge"@en ;
+                                            rdfs:label "to fab ID"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#tool_availability
+<http://www.w3id.org/ecsel-dr-SO#tool_availability> rdf:type owl:DatatypeProperty ;
+                                                    rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                                    rdfs:range xsd:boolean ;
+                                                    rdfs:comment "is tool available? boolean YES/NO"@en ;
+                                                    rdfs:label "tool availability"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#transfer_mode
+<http://www.w3id.org/ecsel-dr-SO#transfer_mode> rdf:type owl:DatatypeProperty ;
+                                                rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Material_Transfer_Matrix> ;
+                                                rdfs:range xsd:string ;
+                                                rdfs:comment "Transfer Mode: Automation, AGV, milkrun or manual"@en ;
+                                                rdfs:label "transfer mode"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#transfer_time
+<http://www.w3id.org/ecsel-dr-SO#transfer_time> rdf:type owl:DatatypeProperty ;
+                                                rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Material_Transfer_Matrix> ;
+                                                rdfs:range xsd:decimal ;
+                                                rdfs:comment "Material Transfer: Duration of transfer from on to the other equipment"@en ,
+                                                             "length of, or element of the length of, a temporal extent expressed in seconds"@en ;
+                                                rdfs:label "transfer time"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#travel_time
+<http://www.w3id.org/ecsel-dr-SO#travel_time> rdf:type owl:DatatypeProperty ;
+                                              rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Supply_Chain> ;
+                                              rdfs:range xsd:decimal ;
+                                              rdfs:comment "length of, or element of the length of, a temporal extent expressed in seconds"@en ;
+                                              rdfs:label "travel time"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#unit
+<http://www.w3id.org/ecsel-dr-SO#unit> rdf:type owl:DatatypeProperty ;
+                                       rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                       rdfs:range xsd:string ;
+                                       rdfs:comment "unit, added due to data import" ;
+                                       rdfs:label "unit"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#units_per_time_period
+<http://www.w3id.org/ecsel-dr-SO#units_per_time_period> rdf:type owl:DatatypeProperty ;
+                                                        rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Delivery_Commitment> ,
+                                                                    <http://www.w3id.org/ecsel-dr-SO#Release_Plan> ;
+                                                        rdfs:range xsd:integer ;
+                                                        rdfs:comment "Delivery Commitment: Quantity of committed delivery per time period (time period depends on company planning process)"@en ,
+                                                                     "Release Plan: Quantity of release per time period (time period depends on company)"@en ;
+                                                        rdfs:label "units per time period"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#variance_p_time
+<http://www.w3id.org/ecsel-dr-SO#variance_p_time> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Operation> ;
+                                                  rdfs:range xsd:decimal ;
+                                                  rdfs:comment "Variance of capacity relevant operation processing time"@en ,
+                                                               "length of, or element of the length of, a temporal extent expressed in seconds"@en ;
+                                                  rdfs:label "variance p time"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#workforce
+<http://www.w3id.org/ecsel-dr-SO#workforce> rdf:type owl:DatatypeProperty ;
+                                            rdfs:domain <http://www.w3id.org/ecsel-dr-SO#Shift> ;
+                                            rdfs:range xsd:integer ;
+                                            rdfs:comment "Shift: Overall number of operational workers assigned to the shift"@en ;
+                                            rdfs:label "workforce"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://org.semanticweb.owlapi/error#Error377
+<http://org.semanticweb.owlapi/error#Error377> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error378
+<http://org.semanticweb.owlapi/error#Error378> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error379
+<http://org.semanticweb.owlapi/error#Error379> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error380
+<http://org.semanticweb.owlapi/error#Error380> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error381
+<http://org.semanticweb.owlapi/error#Error381> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error382
+<http://org.semanticweb.owlapi/error#Error382> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error383
+<http://org.semanticweb.owlapi/error#Error383> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error384
+<http://org.semanticweb.owlapi/error#Error384> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error385
+<http://org.semanticweb.owlapi/error#Error385> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error386
+<http://org.semanticweb.owlapi/error#Error386> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error387
+<http://org.semanticweb.owlapi/error#Error387> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error388
+<http://org.semanticweb.owlapi/error#Error388> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error389
+<http://org.semanticweb.owlapi/error#Error389> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error390
+<http://org.semanticweb.owlapi/error#Error390> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error391
+<http://org.semanticweb.owlapi/error#Error391> rdf:type owl:Class .
+
+
+###  http://org.semanticweb.owlapi/error#Error392
+<http://org.semanticweb.owlapi/error#Error392> rdf:type owl:Class .
+
+
+###  http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe
+<http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> rdf:type owl:Class .
+
+
+###  http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe
+<http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> rdf:type owl:Class .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Bottleneck
+<http://www.w3id.org/ecsel-dr-SO#Bottleneck> rdf:type owl:Class ;
+                                             rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                             rdfs:comment "A capacity Bottleneck is defined as an equipment or multiple equipment that reflect the capacity of the whole line (either a dedicated Line or Pool sharing)."@en ;
+                                             rdfs:label "Bottleneck"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Capacity
+<http://www.w3id.org/ecsel-dr-SO#Capacity> rdf:type owl:Class ;
+                                           rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                           rdfs:comment "As soon as a machine has free capacity: 1. all lots which belong to a priority class have to be dispatched imediately accordung to their priority  rank."@en ;
+                                           rdfs:label "Capacity"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Chemical_Polishing
+<http://www.w3id.org/ecsel-dr-SO#Chemical_Polishing> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                                     rdfs:comment "The chemical polishing process or chemical mechanical planarization (CMP) is a process whereby a chemical reaction increases the mechanical removal rate of a material. CMP is commonly used to polish off high spots on wafers or films deposited on wafers, flattening the film or wafer, referred to as planarization. The chemical reaction that increases the mechanical removal rate is commonly tailored to provide a higher removal rate of one material versus another material. The chemical action in CMP helps to achieve higher selectivity's of one material to another than a strictly mechanical process would provide."@en ;
+                                                     rdfs:label "Chemical Polishing"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Current_WIP
+<http://www.w3id.org/ecsel-dr-SO#Current_WIP> rdf:type owl:Class ;
+                                              rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                              rdfs:comment "“Current WIP” entity describes the actual material distribution in the supply chain. (snapshot entity)"@en ;
+                                              rdfs:label "Current Work In Progress"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Cycle_Time_Committment
+<http://www.w3id.org/ecsel-dr-SO#Cycle_Time_Committment> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                         rdfs:comment """The “Cycle Time Commitment” entity helps controlling the WIP
+via the release plan. (strategy entity)"""@en ;
+                                                         rdfs:label "Cycle Time Commitment"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Delivery_Commitment
+<http://www.w3id.org/ecsel-dr-SO#Delivery_Commitment> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                      rdfs:comment "The \"Delivery Commitment\" directly corresponds to the release plans and cycle time commitments introduced in the corresponding entities."@en ;
+                                                      rdfs:label "Delivery Commitment"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot
+<http://www.w3id.org/ecsel-dr-SO#Demand_Snapshot> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                                  rdfs:comment "The “Demand” entity stores redundant demand at every product level. (snapshot entity)"@en ;
+                                                  rdfs:label "Demand Snapshot"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Deposition
+<http://www.w3id.org/ecsel-dr-SO#Deposition> rdf:type owl:Class ;
+                                             rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                             rdfs:comment "The deposition process, or chemical vapor deposition (CVD) is a process whereby a fiolm is deposited by reacting chemicals together in the gaseous or vapor phase to form a film. The gases or vapors utilized for CVD are compounds that contain the element to be deposited and that may be inducted to react with a substrate or other gas(es) to deposit a film. The CVD reactoin may be thermally activated, plasma induced, plasma enhanced CVD or activated by light in photon induced CVD."@en ;
+                                             rdfs:label "Deposition"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Development
+<http://www.w3id.org/ecsel-dr-SO#Development> rdf:type owl:Class ;
+                                              rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Priority_Class> ;
+                                              rdfs:comment "These lots have the same maxium waiting time as standard lots, however they are put before the standard lots."@en ;
+                                              rdfs:label "Development"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Diffusion
+<http://www.w3id.org/ecsel-dr-SO#Diffusion> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                            rdfs:comment "Diffusion is a process whereby a substance redistributes from an area of relatively high concentration to an area of relatively low concentration due to random thermal motion. The larger the concentration gradient the faster diffusion occurs for a given temperature, conversely, the higher the temperature the faster diffusion occurs for a given concentration gradient."@en ;
+                                            rdfs:label "Diffusion"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Dry_Etching
+<http://www.w3id.org/ecsel-dr-SO#Dry_Etching> rdf:type owl:Class ;
+                                              rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                              rdfs:comment "Dry etching is a process whereby etching is accomplished by a reactive gas as opposed to a liquid. Dry etching techniques include plasma etch, reactive ion etch, magnetically enhanced reactive ion etch, inductively coupled plasma, electron spin resonance, etc."@en ;
+                                              rdfs:label "Dry Etching"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#EPA
+<http://www.w3id.org/ecsel-dr-SO#EPA> rdf:type owl:Class ;
+                                      rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                      rdfs:comment "The EPA is a product identifier referring to the associated process."@en ;
+                                      rdfs:label "EPA"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Equipment
+<http://www.w3id.org/ecsel-dr-SO#Equipment> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                            rdfs:comment "The entity “Equipment” describes the semiconductor equipment of any equipment model. It allocates it to higher level entities and describes the behavior of the equipment. (master entity)"@en ;
+                                            rdfs:label "Equipment"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Equipment_Group
+<http://www.w3id.org/ecsel-dr-SO#Equipment_Group> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                  rdfs:comment "Each machine is allocated to a group of machines doing similar processes. The equipment groups are described and allocated in the master entity “Equipment Group”. (master entity)"@en ;
+                                                  rdfs:label "Equipment Group"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Event_Calendar
+<http://www.w3id.org/ecsel-dr-SO#Event_Calendar> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                 rdfs:comment "In the “Event Calendar” tracing entity, certain events like planned facility shutdowns, etc. can be scheduled"@en ;
+                                                 rdfs:label "Event Calendar"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Fab
+<http://www.w3id.org/ecsel-dr-SO#Fab> rdf:type owl:Class ;
+                                      rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                      rdfs:comment "The “Fab” entity depicts the fab as a technological and physical production unit. (master entity)"@en ;
+                                      rdfs:label "Fabrication"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Furnace
+<http://www.w3id.org/ecsel-dr-SO#Furnace> rdf:type owl:Class ;
+                                          rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Tool> ;
+                                          rdfs:comment "Each furnace consists of two chambers with one tool in each chamber."@en ;
+                                          rdfs:label "Furnace"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Furnace_Process
+<http://www.w3id.org/ecsel-dr-SO#Furnace_Process> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                                  rdfs:comment "Sequence of interdependent and linked procedures which, at every stage, consume one or more resources (employee time, energy, machines, money) to convert inputs (data, material, parts, etc.) into outputs. These outputs then serve as inputs for the next stage until a known goal or end result is reached."@en ;
+                                                  rdfs:label "Furnace Process"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Hot
+<http://www.w3id.org/ecsel-dr-SO#Hot> rdf:type owl:Class ;
+                                      rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Priority_Class> ;
+                                      rdfs:comment "These lots are processed after a certain maximum waiting time which is shorter than the maximum waiting time of standard lots. In general, for all classes, if there is more than one product type waiting."@en ;
+                                      rdfs:label "Hot"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Implantation
+<http://www.w3id.org/ecsel-dr-SO#Implantation> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                               rdfs:comment "Implantation or Ion Implantation is a technique where ions are accelerated to a higher energy and speed an injected into a semiconductor. The dominant techniques for introducing dopants into a semiconductor."@en ;
+                                               rdfs:label "Implantation"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Lithography
+<http://www.w3id.org/ecsel-dr-SO#Lithography> rdf:type owl:Class ;
+                                              rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                              rdfs:comment "The lithography process is the key process in frontend. This consists of the following steps: a photo resisting layer is spun on a wafer, then exposed through the mask, then developed, then showing the effect on the open places, and then final deletion of the photo resisting material leaves only the remaining structure on the water. after some time for deposition, these steps are repeated up to 35 times."@en ;
+                                              rdfs:label "Lithography"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Lot
+<http://www.w3id.org/ecsel-dr-SO#Lot> rdf:type owl:Class ;
+                                      rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                      rdfs:comment "The Lot represents manufacturing unit (e.g. in the semicondutor industry in Frontend this often consists of 25 or 50 wafers)."@en ;
+                                      rdfs:label "Lot"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Lot_Event
+<http://www.w3id.org/ecsel-dr-SO#Lot_Event> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                            rdfs:comment "The Lot Event  tracing entity gives the history of lot events. e.g. Hold events, Split events, Merge events, etc. (tracing entities)."@en ;
+                                            rdfs:label "Lot Event"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Lot_Size
+<http://www.w3id.org/ecsel-dr-SO#Lot_Size> rdf:type owl:Class ;
+                                           rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                           rdfs:comment "A measure or quantity increment acceptable to or specified by the party offering to buy or sell. Used also as an alternative term for lot quantity."@en ;
+                                           rdfs:label "Lot Size"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Mask
+<http://www.w3id.org/ecsel-dr-SO#Mask> rdf:type owl:Class ;
+                                       rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                       rdfs:comment "A transparent (glass or quartz) plate covered with an array of patterns used in making an IC. Each pattern consists of opaque and transparent areas that define the size and shape of all circuit and device elements. The mask is used to expose selected areas, and defines the areas to be processed. Masks may use emulsion, chrome, iron oxide, silicon or other material to produce the opaque areas."@en ;
+                                       rdfs:label "Mask"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Material_Transfer_Matrix
+<http://www.w3id.org/ecsel-dr-SO#Material_Transfer_Matrix> rdf:type owl:Class ;
+                                                           rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                           rdfs:comment "A material transfer matrix estimates the duration of material from on to another equipment."@en ;
+                                                           rdfs:label "Material Transfer Matrix"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Operation
+<http://www.w3id.org/ecsel-dr-SO#Operation> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                            rdfs:comment "The master entity “Operation” depicts the generic behavior of a single process step. Each operation has a foreign key relation to equipment and to route which means that the operation is required by the specific routes and requires a specific equipment. (workflow descriptive master entity)"@en ;
+                                            rdfs:label "Operation"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Operator
+<http://www.w3id.org/ecsel-dr-SO#Operator> rdf:type owl:Class ;
+                                           rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                           rdfs:comment "A user that interacts with the equipment only to the degree necessary for the equipment to perform its intended function."@en ;
+                                           rdfs:label "Operator"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Owner
+<http://www.w3id.org/ecsel-dr-SO#Owner> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                        rdfs:comment "An owner is the entity that has the highest level of access authority or legal right to a system or equipment."@en ;
+                                        rdfs:label "Owner"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Planning_Work_Center
+<http://www.w3id.org/ecsel-dr-SO#Planning_Work_Center> rdf:type owl:Class ;
+                                                       rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                       rdfs:comment "Semiconductor wafers arrive at the planning work center according to a Poisson process in lots with a certain unit size. The planning work center X48- can process three different products which arrive in four different classes."@en ;
+                                                       rdfs:label "Planning Work Center"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Plant
+<http://www.w3id.org/ecsel-dr-SO#Plant> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                        rdfs:comment "The “Plant” entity describes the plant as a physical location of one or more fabs. The Plant belongs to a supply chain and can either be internal or external. (master entity)"@en ;
+                                        rdfs:label "Plant"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Priority_Class
+<http://www.w3id.org/ecsel-dr-SO#Priority_Class> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                                 rdfs:comment "Each lot is characterized by a product type and a priority class. The priority classes are listed as follows: development, hot, productive, rocket and timecoupling."@en ;
+                                                 rdfs:label "Priority Class"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Process
+<http://www.w3id.org/ecsel-dr-SO#Process> rdf:type owl:Class ;
+                                          rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                          rdfs:comment "Sequence of interdependent and linked procedures which, at every stage, consume one or more resources (employee time, energy, machines, money) to convert inputs (data, material, parts, etc.) into outputs. These outputs then serve as inputs for the next stage until a known goal or end result is reached."@en ;
+                                          rdfs:label "Process"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Process_Class
+<http://www.w3id.org/ecsel-dr-SO#Process_Class> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Process> ;
+                                                rdfs:comment "A Process Class is the second hierarchy level in the Technology Catalogue and is a subset of top hierarchy level \"Technology Class\". A Process Class is defined by the device category and its generation or wafer diameter."@en ;
+                                                rdfs:label "Process Class"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Process_Flow
+<http://www.w3id.org/ecsel-dr-SO#Process_Flow> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Process> ;
+                                               rdfs:comment "A wafer technology is defined as a manufacturing process flow on wafer level including wafer test and pre-assembly which creates one device (discrete technology) or a set of different devices (IC technology) to be used in a product."@en ;
+                                               rdfs:label "Process Flow"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Process_Group
+<http://www.w3id.org/ecsel-dr-SO#Process_Group> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Process> ;
+                                                rdfs:comment "A Process Group is the third hierarchy level in the Technology Catalogue and a subset of the Process Class. A Process Group is defined by the device type and its generation (eventually voltage class) or wafer diameter"@en ;
+                                                rdfs:label "Process Group"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Process_Line
+<http://www.w3id.org/ecsel-dr-SO#Process_Line> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Process> ;
+                                               rdfs:comment "A Process Line is the forth hierarchy level in the Technology Catalogue and is a subset of Process Group. A Process Line is defined by WHAT is produced in detail"@en ;
+                                               rdfs:label "Process Line"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Product
+<http://www.w3id.org/ecsel-dr-SO#Product> rdf:type owl:Class ;
+                                          rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                          rdfs:comment "A product is a work product that is delivered to the customer."@en ,
+                                                       "A product is any tangible output or service that is a result of a process and that is intended for delivery to a customer or end user."@en ;
+                                          rdfs:label "Product"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Product_Class
+<http://www.w3id.org/ecsel-dr-SO#Product_Class> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Product> ;
+                                                rdfs:comment "the product class is an entity used for planning and reporting. This helps create stable brand/name architectures to enable highest possible product portfolio transparency, true value creation ad to prevent from product TM overload."@en ;
+                                                rdfs:label "Product Class"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Product_Group
+<http://www.w3id.org/ecsel-dr-SO#Product_Group> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Product> ;
+                                                rdfs:comment "A (main) product group is a grouping of products for calculation or sales purposes. The scope includes finished and unfinished products of one product line."@en ;
+                                                rdfs:label "Product Group"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Product_Level
+<http://www.w3id.org/ecsel-dr-SO#Product_Level> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                rdfs:comment "In the \"product level\" entity, the aggregation of elements enables the grouping of products and defines the relationship between products and groups at different hierarchy levels. This supports planning, logistics, modeling, forecasting and reporting."@en ;
+                                                rdfs:label "Product Level"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Product_Level_2
+<http://www.w3id.org/ecsel-dr-SO#Product_Level_2> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Product_Level> ;
+                                                  rdfs:comment "The product levels 3 to 1 are aggregated levels that are based on information from product level 4. (hierarchal aggregation level)"@en ;
+                                                  rdfs:label "Product Level 2"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Product_Level_3
+<http://www.w3id.org/ecsel-dr-SO#Product_Level_3> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Product_Level> ;
+                                                  rdfs:comment """The static bottlenecks are determined in the “Product Level 3” master entity
+because the mid capacity planning is done on this first aggregated product level. There is no big difference in capacity from the aggregated level 3 product to its child level 4 products. (hierarchal aggregation level)"""@en ;
+                                                  rdfs:label "Product Level 3"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Product_Line
+<http://www.w3id.org/ecsel-dr-SO#Product_Line> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Product> ;
+                                               rdfs:comment "The product line is one of the most prominent grouping of products. It is used in reporting as well as for structuring organizations."@en ;
+                                               rdfs:label "Product Line"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Product_Number
+<http://www.w3id.org/ecsel-dr-SO#Product_Number> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Product> ;
+                                                 rdfs:comment "The product number is a unique identifier of a product. The scope is limited to finished products only."@en ;
+                                                 rdfs:label "Product Number"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Production_Request
+<http://www.w3id.org/ecsel-dr-SO#Production_Request> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                                     rdfs:comment "Production requests definte what the facilities need to produce when and in what quantity."@en ;
+                                                     rdfs:label "Production Request"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Productive
+<http://www.w3id.org/ecsel-dr-SO#Productive> rdf:type owl:Class ;
+                                             rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Priority_Class> ;
+                                             rdfs:comment "The standard lots, also referred to as Productive (Prod) lots, are the most common lot type and have no priority."@en ;
+                                             rdfs:label "Productive"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Purge
+<http://www.w3id.org/ecsel-dr-SO#Purge> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                        rdfs:comment "purge' is the application of an intert gas, or gas mixture, to the OD or ID surface of the weld joint to displace non-inert atmospheric gases. A block purge is a non-flowing purge with positive pressure."@en ;
+                                        rdfs:label "Purge"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Release_Plan
+<http://www.w3id.org/ecsel-dr-SO#Release_Plan> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                               rdfs:comment "The “Release Plan” entity shows the quantity planned to be released to a fab or facility. (strategy entity)"@en ;
+                                               rdfs:label "Release Plan"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Robot
+<http://www.w3id.org/ecsel-dr-SO#Robot> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                        rdfs:comment "The robot loads and unloads the lots from the WIP station into the furnace. Robot can load the furnace while another boat is processd by the tool."@en ;
+                                        rdfs:label "Robot"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Rocket
+<http://www.w3id.org/ecsel-dr-SO#Rocket> rdf:type owl:Class ;
+                                         rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Priority_Class> ;
+                                         rdfs:comment "Rocket lots are processed immediately if a machine has free capacity. The remaining furnace space is then filled up with lots of the same product."@en ;
+                                         rdfs:label "Rocket"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Route
+<http://www.w3id.org/ecsel-dr-SO#Route> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                        rdfs:comment "The master entity “Route” describes the structure of a workflow out of operations. Every product uses a specific route in its value stream, i.e. the complete sequence of operations with all mandatory and optional operations necessary to complete the product. A route makes use of the single operations. (workflow descriptive master entity)"@en ;
+                                        rdfs:label "Route"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Shift
+<http://www.w3id.org/ecsel-dr-SO#Shift> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                        rdfs:comment "Each workshop has a certain technical and operational workforce organized in shifts described in the “Shift” entity."@en ;
+                                        rdfs:label "Shift"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Simulation_Part
+<http://www.w3id.org/ecsel-dr-SO#Simulation_Part> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                                  rdfs:comment "A simulation part helps to identify the same product in different locations. They are visible in Product Structures. This is a simulation entity and not a form of production/planning."@en ;
+                                                  rdfs:label "Simulation Part"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Simulation_Route
+<http://www.w3id.org/ecsel-dr-SO#Simulation_Route> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                                   rdfs:comment "A simulation route (AKA workroute) represents a sequence of process steps in manufacutring (mainly at wafer fab). This is a simulation entity and not a form of production/planning."@en ;
+                                                   rdfs:label "Simulation Route"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Sputtering
+<http://www.w3id.org/ecsel-dr-SO#Sputtering> rdf:type owl:Class ;
+                                             rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                             rdfs:comment "The sputtering process, or physical vapor deposition (PVD) is the most used layering process today. Here gas atoms, mostly argon, strike out atoms from the cathode I an electric field which then form a thin film on the wafer surface."@en ;
+                                             rdfs:label "Sputtering"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Supply_Chain
+<http://www.w3id.org/ecsel-dr-SO#Supply_Chain> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                               rdfs:comment "The entity “Supply Chain” describes the supply chain from the topmost level with all possible material flow edges, referring on the FabIDs (master entity)"@en ;
+                                               rdfs:label "Supply Chain"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Target_Costs
+<http://www.w3id.org/ecsel-dr-SO#Target_Costs> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                               rdfs:comment "The target costs entity is the final cost of a product or service that must be achieved in order to generate the desired level of sales revenue and income or due to contractual agreements."@en ;
+                                               rdfs:label "Target Costs"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Target_Revenue
+<http://www.w3id.org/ecsel-dr-SO#Target_Revenue> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                 rdfs:comment "The target revenue is the amount of income a company wants to generate for the current accounting period."@en ;
+                                                 rdfs:label "Target Revenue"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Target_Service_Level
+<http://www.w3id.org/ecsel-dr-SO#Target_Service_Level> rdf:type owl:Class ;
+                                                       rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                       rdfs:comment "The target service level is a performance indicator expressing the percentage of orders satisfied."@en ;
+                                                       rdfs:label "Target Service Level"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Technology
+<http://www.w3id.org/ecsel-dr-SO#Technology> rdf:type owl:Class ;
+                                             rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ,
+                                                             <http://www.w3id.org/ecsel-dr-SO#Technology> ;
+                                             rdfs:comment "A semiconductor technology is a set of equipment, processes, manufacturing techniques and the related methods and procedures to enable the design & production of components, sub-components and modules."@en ;
+                                             rdfs:label "Technology"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Tempering
+<http://www.w3id.org/ecsel-dr-SO#Tempering> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Furnace_Process> ;
+                                            rdfs:comment "The tempering process is a type of heat treatment applied by the furnace. The process has the effect of toughening by lessing brittleness and reducing internal stresses."@en ;
+                                            rdfs:label "Tempering"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Time_Constraints
+<http://www.w3id.org/ecsel-dr-SO#Time_Constraints> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                                   rdfs:comment "As single operations can set the lot to a time-critical state, time constraints can ensure that the operation setting it to an uncritical state is not delayed. Also the other case where certain time has to be spent between two operations can be covered with this master entity. (workflow deswcriptive master entities)"@en ;
+                                                   rdfs:label "Time Constraints"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Time_Coupling
+<http://www.w3id.org/ecsel-dr-SO#Time_Coupling> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Priority_Class> ;
+                                                rdfs:comment "Lots of this type are requested by the next machine in the production line in irregular intervals. Special chemical characteristics require the lot being further processed immediately after the furnace operation. Thus, the downstram machines keep capacity free for the resulting time slot. timecoupling can be turned on or off. if it is on all lots are processed no matter how many are waiting and if not they wait."@en ;
+                                                rdfs:label "Time Coupling"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Tool
+<http://www.w3id.org/ecsel-dr-SO#Tool> rdf:type owl:Class ;
+                                       rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                       rdfs:comment "A tool is any pieve of semiconductor fabrication or inspection equipment designed to process wafers. Often used synonymously with equipment in the silicon wafer processing industry."@en ;
+                                       rdfs:label "Tool"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Wet_Etching
+<http://www.w3id.org/ecsel-dr-SO#Wet_Etching> rdf:type owl:Class ;
+                                              rdfs:subClassOf <http://www.w3id.org/ecsel-dr-SO#Workshop> ;
+                                              rdfs:comment "Wet Etching is the process of removing material-etching, through the use of chemical activity."@en ;
+                                              rdfs:label "Wet Etching"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Work_In_Progress_Station
+<http://www.w3id.org/ecsel-dr-SO#Work_In_Progress_Station> rdf:type owl:Class ;
+                                                           rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Production_Lobe> ;
+                                                           rdfs:comment "Work in Progress (WIP) processing occurs here. WIP refers to the units of production that have been released into the factory, but have not yet been scrapped, have not been sent our for external rework, and have not finished processing through all of the production steps."@en ;
+                                                           rdfs:label "Work In Progress Station"@en .
+
+
+###  http://www.w3id.org/ecsel-dr-SO#Workshop
+<http://www.w3id.org/ecsel-dr-SO#Workshop> rdf:type owl:Class ;
+                                           rdfs:subClassOf <http://www.w3id.org/ecsel-dr#Semiconductor_Development_Lobe> ;
+                                           rdfs:comment "The overall organizational working structures within the fabs is described in the entity “Workshop” (master entity)"@en ;
+                                           rdfs:label "Workshop"@en .
+
+
+###  Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/
