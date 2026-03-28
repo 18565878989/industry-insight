@@ -14,7 +14,7 @@ def create_app():
     CORS(app)
 
     # 注册蓝图
-    from app.routes import companies, products, relationships, analysis, configs, imports, llm, news
+    from app.routes import companies, products, relationships, analysis, configs, imports, llm, news, exports
     app.register_blueprint(companies.bp)
     app.register_blueprint(products.bp)
     app.register_blueprint(relationships.bp)
@@ -23,6 +23,7 @@ def create_app():
     app.register_blueprint(imports.bp)
     app.register_blueprint(llm.bp)
     app.register_blueprint(news.bp)
+    app.register_blueprint(exports.bp)
 
     @app.route('/api/health')
     def health():
