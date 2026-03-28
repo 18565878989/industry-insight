@@ -10,6 +10,7 @@ interface WebSource {
   title: string;
   url: string;
   snippet: string;
+  provider?: string;
 }
 
 export function ChatAssistant() {
@@ -18,6 +19,7 @@ export function ChatAssistant() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [webSearchEnabled, setWebSearchEnabled] = useState(true);
+  const [searchProvider, setSearchProvider] = useState('duckduckgo');
   const [webSources, setWebSources] = useState<WebSource[]>([]);
 
   const handleSend = async () => {
@@ -37,7 +39,8 @@ export function ChatAssistant() {
         body: JSON.stringify({ 
           question: input,
           use_ontology: true,
-          use_web_search: webSearchEnabled
+          use_web_search: webSearchEnabled,
+          search_provider: searchProvider
         }),
       });
       
@@ -59,6 +62,19 @@ export function ChatAssistant() {
     }
     
     setLoading(false);
+  };
+
+  const handleToggleSearch = async (enabled: boolean) => {
+    setWebSearchEnabled(enabled);
+    try {
+      await fetch(`${API_BASE_URL}/api/llm/search/toggle`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled })
+      });
+    } catch (e) {
+      console.error('Failed to toggle search');
+    }
   };
 
   const suggestedQuestions = [
@@ -89,32 +105,53 @@ export function ChatAssistant() {
           </p>
         </div>
         
-        {/* Web Search Toggle */}
-        <div className="px-6 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-slate-700">🌐 网络搜索:</span>
-            <span className={`text-xs px-2 py-1 rounded-full ${webSearchEnabled ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-500'}`}>
-              {webSearchEnabled ? '已启用' : '已禁用'}
-            </span>
+        {/* Search Config */}
+        <div className="px-6 py-3 bg-slate-50 border-b border-slate-200">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-4">
+              {/* Toggle */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-slate-700">🌐 网络搜索:</span>
+                <span className={`text-xs px-2 py-1 rounded-full ${webSearchEnabled ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-500'}`}>
+                  {webSearchEnabled ? '已启用' : '已禁用'}
+                </span>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  checked={webSearchEnabled}
+                  onChange={(e) => handleToggleSearch(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+            
+            {/* Provider Selection */}
+            {webSearchEnabled && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-slate-600">搜索引擎:</span>
+                <select
+                  value={searchProvider}
+                  onChange={(e) => setSearchProvider(e.target.value)}
+                  className="px-3 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="duckduckgo">DuckDuckGo (免费)</option>
+                  <option value="bing">Bing Search API</option>
+                  <option value="google">Google Custom Search</option>
+                </select>
+              </div>
+            )}
           </div>
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input 
-              type="checkbox" 
-              checked={webSearchEnabled}
-              onChange={(e) => setWebSearchEnabled(e.target.checked)}
-              className="sr-only peer"
-            />
-            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-          </label>
+          
+          {webSearchEnabled && (
+            <div className="mt-2 p-2 bg-blue-50 rounded-lg">
+              <p className="text-xs text-blue-600">
+                💡 启用网络搜索将抓取全网最新资讯。推荐使用 DuckDuckGo（无需配置），如需 Bing/Google 请在 Settings 配置 API Key。
+              </p>
+            </div>
+          )}
         </div>
-        
-        {webSearchEnabled && (
-          <div className="px-6 py-2 bg-blue-50 border-b border-blue-100">
-            <p className="text-xs text-blue-600">
-              💡 启用网络搜索将抓取全网最新资讯，提供更及时的分析报告
-            </p>
-          </div>
-        )}
         
         {/* Messages */}
         <div className="h-96 overflow-y-auto p-4 space-y-4">
@@ -160,8 +197,8 @@ export function ChatAssistant() {
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
+              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`
+            }>
               <div
                 className={`max-w-[85%] px-4 py-3 rounded-2xl ${
                   msg.role === 'user'
@@ -195,7 +232,9 @@ export function ChatAssistant() {
           {/* Web Sources */}
           {webSources.length > 0 && (
             <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
-              <p className="text-sm font-medium text-slate-700 mb-2">🌐 网络资讯来源:</p>
+              <p className="text-sm font-medium text-slate-700 mb-2">
+                🌐 网络资讯来源 ({webSources[0]?.provider || 'search'}):
+              </p>
               <div className="space-y-2">
                 {webSources.map((source, i) => (
                   <a
@@ -207,7 +246,9 @@ export function ChatAssistant() {
                   >
                     <div className="text-blue-600 font-medium">{source.title}</div>
                     <div className="text-slate-500 text-xs truncate">{source.url}</div>
-                    <div className="text-slate-600 text-xs mt-1 line-clamp-2">{source.snippet}</div>
+                    {source.snippet && (
+                      <div className="text-slate-600 text-xs mt-1 line-clamp-2">{source.snippet}</div>
+                    )}
                   </a>
                 ))}
               </div>
