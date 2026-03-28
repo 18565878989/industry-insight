@@ -8,6 +8,7 @@ import { KnowledgeGraph } from './components/knowledge-graph/KnowledgeGraph';
 import { SupplyChainView } from './components/supply-chain/SupplyChainView';
 import { TrendAnalysis } from './components/analysis/TrendAnalysis';
 import { Settings } from './components/settings/Settings';
+import { ChatAssistant } from './components/chat/ChatAssistant';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/supply-chain" element={<Header title="Supply Chain" subtitle="Industry value chain analysis" />} />
             <Route path="/analysis" element={<Header title="Analysis" subtitle="Trends and market insights" />} />
             <Route path="/settings" element={<Header title="Settings" subtitle="System configuration" />} />
+            <Route path="/assistant" element={<Header title="AI Assistant" subtitle="SemiKong Knowledge Q&A" />} />
           </Routes>
           <div className="flex-1 p-6 overflow-auto">
             <Routes>
@@ -33,6 +35,7 @@ function App() {
               <Route path="/supply-chain" element={<SupplyChainView />} />
               <Route path="/analysis" element={<TrendAnalysis />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/assistant" element={<ChatAssistant />} />
             </Routes>
           </div>
         </main>

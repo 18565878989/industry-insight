@@ -14,13 +14,14 @@ def create_app():
     CORS(app)
 
     # 注册蓝图
-    from app.routes import companies, products, relationships, analysis, configs, imports
+    from app.routes import companies, products, relationships, analysis, configs, imports, llm
     app.register_blueprint(companies.bp)
     app.register_blueprint(products.bp)
     app.register_blueprint(relationships.bp)
     app.register_blueprint(analysis.bp)
     app.register_blueprint(configs.bp)
     app.register_blueprint(imports.bp)
+    app.register_blueprint(llm.bp)
 
     @app.route('/api/health')
     def health():

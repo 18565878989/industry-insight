@@ -6,6 +6,7 @@ import {
   GitBranch,
   TrendingUp,
   Settings,
+  MessageCircle,
   Menu,
   X,
 } from 'lucide-react';
@@ -17,6 +18,7 @@ const navItems = [
   { to: '/knowledge-graph', icon: Network, label: 'Knowledge Graph' },
   { to: '/supply-chain', icon: GitBranch, label: 'Supply Chain' },
   { to: '/analysis', icon: TrendingUp, label: 'Analysis' },
+  { to: '/assistant', icon: MessageCircle, label: 'AI Assistant' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ];
 
