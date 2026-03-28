@@ -14,7 +14,7 @@ class MiniMaxLLM:
     def __init__(self, api_key: str = None, model: str = "MiniMax-M2.7"):
         self.api_key = api_key or os.environ.get('MINIMAX_API_KEY', '')
         self.model = model
-        self.base_url = "https://api.minimaxi.chat/v1"
+        self.base_url = "https://api.minimaxi.com/v1"
         
     def chat(self, prompt: str, system_prompt: str = None, temperature: float = 0.7, max_tokens: int = 4000) -> Dict[str, Any]:
         """
@@ -107,8 +107,8 @@ def get_llm_service() -> MiniMaxLLM:
     """获取 LLM 服务实例"""
     from ..models import db, ModelConfig
     
-    # 尝试从数据库获取配置
-    active_config = ModelConfig.query.filter_by(is_active=True, provider='minimax').first()
+    # 尝试从数据库获取配置 (没有provider字段，改用name过滤)
+    active_config = ModelConfig.query.filter_by(is_active=True, name='MiniMax-M2.7').first()
     
     if active_config and active_config.api_key:
         return MiniMaxLLM(
