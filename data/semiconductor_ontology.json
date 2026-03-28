@@ -1,0 +1,164 @@
+{
+  "ontology_name": "Semiconductor Industry Ontology",
+  "version": "1.0",
+  "description": "Semiconductor industry knowledge graph ontology",
+  "concepts": {
+    "Design": {
+      "description": "Chip design companies",
+      "sub_concepts": ["Fabless", "EDA", "IP"],
+      "properties": ["node_count", "process_node", "die_size"]
+    },
+    "Manufacturing": {
+      "description": "Manufacturing companies",
+      "sub_concepts": ["Foundry", "IDM", "OSAT"],
+      "properties": ["fab_locations", "capacity", "process_nodes"]
+    },
+    "Materials": {
+      "description": "Materials and chemicals",
+      "sub_concepts": ["Silicon", "Photoresist", "Chemicals", "Gases"],
+      "properties": ["purity", "supplier", "application"]
+    },
+    "Equipment": {
+      "description": "Manufacturing equipment",
+      "sub_concepts": ["Lithography", "Etch", "Deposition", "Inspection"],
+      "properties": ["throughput", "accuracy", "supplier"]
+    },
+    "Packaging": {
+      "description": "Packaging and testing",
+      "sub_concepts": ["OSAT", "Advanced Packaging", "Testing"],
+      "properties": ["technology", "capacity"]
+    },
+    "Products": {
+      "description": "Semiconductor products",
+      "sub_concepts": ["Logic", "Memory", "Analog", "RF", "Power"],
+      "properties": ["performance", "application"]
+    }
+  },
+  "relationships": {
+    "SUPPLIES": "Material/Equipment supplier to manufacturer",
+    "MANUFACTURES": " foundry to fabless company",
+    "PARTNERS_WITH": "Strategic partnership",
+    "COMPETES_WITH": "Competitive relationship",
+    "ACQUIRES": "Acquisition relationship",
+    "INVESTS_IN": "Investment relationship",
+    "USES": "Product uses component",
+    "LOCATED_IN": "Geographic location"
+  },
+  "sample_companies": [
+    {
+      "name": "NVIDIA",
+      "type": "Design",
+      "sub_type": "Fabless",
+      "products": ["GPU", "AI Accelerator"],
+      "foundry": ["TSMC", "Samsung"]
+    },
+    {
+      "name": "TSMC",
+      "type": "Manufacturing",
+      "sub_type": "Foundry",
+      "process_nodes": ["3nm", "5nm", "7nm"],
+      "customers": ["Apple", "NVIDIA", "AMD"]
+    },
+    {
+      "name": "ASML",
+      "type": "Equipment",
+      "sub_type": "Lithography",
+      "products": ["EUV", "DUV"],
+      "customers": ["TSMC", "Samsung", "Intel"]
+    },
+    {
+      "name": "Intel",
+      "type": "Manufacturing",
+      "sub_type": "IDM",
+      "process_nodes": ["Intel 4", "Intel 3"],
+      "divisions": ["Intel Foundry Services"]
+    },
+    {
+      "name": "Samsung Electronics",
+      "type": "Manufacturing",
+      "sub_type": "IDM",
+      "process_nodes": ["3nm GAA", "4nm"],
+      "divisions": ["Samsung Foundry", "Samsung LSI"]
+    },
+    {
+      "name": "Qualcomm",
+      "type": "Design",
+      "sub_type": "Fabless",
+      "products": ["Snapdragon", "Modems"],
+      "foundry": ["TSMC", "Samsung"]
+    },
+    {
+      "name": "AMD",
+      "type": "Design",
+      "sub_type": "Fabless",
+      "products": ["Ryzen", "EPYC", "Radeon"],
+      "foundry": ["TSMC"]
+    },
+    {
+      "name": "Applied Materials",
+      "type": "Equipment",
+      "sub_type": "Deposition",
+      "products": ["CVD", "PVD", "Etch"],
+      "customers": ["TSMC", "Samsung", "Intel"]
+    },
+    {
+      "name": "Lam Research",
+      "type": "Equipment",
+      "sub_type": "Etch",
+      "products": ["干法蚀刻", "CVD"],
+      "customers": ["TSMC", "Samsung"]
+    },
+    {
+      "name": "Tokyo Electron",
+      "type": "Equipment",
+      "sub_type": "Lithography",
+      "products": ["涂布显影", "蚀刻", "沉积"],
+      "customers": ["TSMC", "Samsung"]
+    },
+    {
+      "name": "SK Hynix",
+      "type": "Manufacturing",
+      "sub_type": "IDM",
+      "products": ["HBM", "DRAM", "NAND"],
+      "memory_type": ["HBM3", "DDR5"]
+    },
+    {
+      "name": "Micron Technology",
+      "type": "Manufacturing",
+      "sub_type": "IDM",
+      "products": ["HBM", "DRAM", "NAND"],
+      "memory_type": ["HBM3e", "DDR5", "176-layer NAND"]
+    },
+    {
+      "name": "KLA Corporation",
+      "type": "Equipment",
+      "sub_type": "Inspection",
+      "products": ["缺陷检测", "量测"],
+      "customers": ["TSMC", "Samsung", "Intel"]
+    },
+    {
+      "name": "MediaTek",
+      "type": "Design",
+      "sub_type": "Fabless",
+      "products": ["天玑系列", "手机SoC"],
+      "foundry": ["TSMC"]
+    },
+    {
+      "name": "Broadcom",
+      "type": "Design",
+      "sub_type": "Fabless",
+      "products": ["ASIC", "网络芯片", "WiFi"],
+      "foundry": ["TSMC", "Samsung"]
+    }
+  ],
+  "supply_chain_stages": [
+    "EDA/IP",
+    "Silicon Wafer",
+    "Chip Design",
+    "Fabrication",
+    "Assembly/Packaging",
+    "Testing",
+    "System Integration",
+    "End Products"
+  ]
+}
