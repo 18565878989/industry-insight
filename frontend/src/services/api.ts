@@ -9,11 +9,10 @@ import type {
   TrendData,
   Summary,
 } from '../types';
-
-const API_BASE_URL = 'http://localhost:5000/api';
+import { API_BASE_URL } from '../config';
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: `${API_BASE_URL}/api`,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -144,6 +143,26 @@ export const analysisApi = {
   getSummary: async () => {
     const response = await api.get<{ summary: Summary }>('/analysis/summary');
     return response.data.summary;
+  },
+};
+
+// Configs API
+export const configsApi = {
+  getModels: async () => {
+    const response = await api.get('/configs/models');
+    return response.data;
+  },
+  saveModel: async (data: any) => {
+    const response = await api.post('/configs/models', data);
+    return response.data;
+  },
+  getKgConfigs: async () => {
+    const response = await api.get('/configs/kg');
+    return response.data;
+  },
+  getOntologyConfigs: async () => {
+    const response = await api.get('/configs/ontology');
+    return response.data;
   },
 };
 
