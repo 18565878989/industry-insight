@@ -7,6 +7,7 @@ import { CompanyDetail } from './components/company/CompanyDetail';
 import { KnowledgeGraph } from './components/knowledge-graph/KnowledgeGraph';
 import { SupplyChainView } from './components/supply-chain/SupplyChainView';
 import { TrendAnalysis } from './components/analysis/TrendAnalysis';
+import { Settings } from './components/settings/Settings';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/knowledge-graph" element={<Header title="Knowledge Graph" subtitle="Interactive relationship visualization" />} />
             <Route path="/supply-chain" element={<Header title="Supply Chain" subtitle="Industry value chain analysis" />} />
             <Route path="/analysis" element={<Header title="Analysis" subtitle="Trends and market insights" />} />
+            <Route path="/settings" element={<Header title="Settings" subtitle="System configuration" />} />
           </Routes>
           <div className="flex-1 p-6 overflow-auto">
             <Routes>
@@ -30,6 +32,7 @@ function App() {
               <Route path="/knowledge-graph" element={<KnowledgeGraph />} />
               <Route path="/supply-chain" element={<SupplyChainView />} />
               <Route path="/analysis" element={<TrendAnalysis />} />
+              <Route path="/settings" element={<Settings />} />
             </Routes>
           </div>
         </main>
