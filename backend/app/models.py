@@ -93,3 +93,137 @@ class Relationship(db.Model):
             'source_name': self.source_company.name if self.source_company else None,
             'target_name': self.target_company.name if self.target_company else None,
         }
+
+
+class ModelConfig(db.Model):
+    __tablename__ = 'model_configs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False, default='default')
+    api_key = db.Column(db.String(500), nullable=True)
+    endpoint = db.Column(db.String(500), nullable=True)
+    model_name = db.Column(db.String(100), nullable=True)
+    temperature = db.Column(db.Float, default=0.7)
+    max_tokens = db.Column(db.Integer, default=2000)
+    is_active = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'api_key': self.api_key,
+            'endpoint': self.endpoint,
+            'model_name': self.model_name,
+            'temperature': self.temperature,
+            'max_tokens': self.max_tokens,
+            'is_active': self.is_active,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+
+class KGConfig(db.Model):
+    __tablename__ = 'kg_configs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False, default='default')
+    data_source = db.Column(db.String(500), nullable=True)
+    refresh_interval = db.Column(db.Integer, default=3600)
+    batch_size = db.Column(db.Integer, default=100)
+    is_active = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'data_source': self.data_source,
+            'refresh_interval': self.refresh_interval,
+            'batch_size': self.batch_size,
+            'is_active': self.is_active,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+
+class OntologyConfig(db.Model):
+    __tablename__ = 'ontology_configs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False, default='default')
+    file_path = db.Column(db.String(500), nullable=True)
+    file_type = db.Column(db.String(20), nullable=True)
+    concept_count = db.Column(db.Integer, default=0)
+    relationship_count = db.Column(db.Integer, default=0)
+    is_active = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'file_path': self.file_path,
+            'file_type': self.file_type,
+            'concept_count': self.concept_count,
+            'relationship_count': self.relationship_count,
+            'is_active': self.is_active,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+
+class KnowledgeGraphNode(db.Model):
+    __tablename__ = 'knowledge_graph_nodes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    external_id = db.Column(db.String(100), nullable=True, index=True)
+    name = db.Column(db.String(255), nullable=False)
+    node_type = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(100))
+    properties = db.Column(db.JSON)
+    source = db.Column(db.String(100))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    relationships_as_source = db.relationship('KnowledgeGraphEdge', foreign_keys='KnowledgeGraphEdge.source_id', backref='source_node', lazy='dynamic')
+    relationships_as_target = db.relationship('KnowledgeGraphEdge', foreign_keys='KnowledgeGraphEdge.target_id', backref='target_node', lazy='dynamic')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'external_id': self.external_id,
+            'name': self.name,
+            'node_type': self.node_type,
+            'category': self.category,
+            'properties': self.properties,
+            'source': self.source,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+        }
+
+
+class KnowledgeGraphEdge(db.Model):
+    __tablename__ = 'knowledge_graph_edges'
+
+    id = db.Column(db.Integer, primary_key=True)
+    source_id = db.Column(db.Integer, db.ForeignKey('knowledge_graph_nodes.id'), nullable=False)
+    target_id = db.Column(db.Integer, db.ForeignKey('knowledge_graph_nodes.id'), nullable=False)
+    relationship_type = db.Column(db.String(100), nullable=False)
+    properties = db.Column(db.JSON)
+    source = db.Column(db.String(100))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'source_id': self.source_id,
+            'target_id': self.target_id,
+            'relationship_type': self.relationship_type,
+            'properties': self.properties,
+            'source': self.source,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'source_name': self.source_node.name if self.source_node else None,
+            'target_name': self.target_node.name if self.target_node else None,
+        }
