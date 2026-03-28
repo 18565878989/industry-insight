@@ -9,6 +9,7 @@ import {
   MessageCircle,
   Menu,
   X,
+  Newspaper,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -18,6 +19,7 @@ const navItems = [
   { to: '/knowledge-graph', icon: Network, label: 'Knowledge Graph' },
   { to: '/supply-chain', icon: GitBranch, label: 'Supply Chain' },
   { to: '/analysis', icon: TrendingUp, label: 'Analysis' },
+  { to: '/news', icon: Newspaper, label: 'Industry News' },
   { to: '/assistant', icon: MessageCircle, label: 'AI Assistant' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ];
