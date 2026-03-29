@@ -18,6 +18,7 @@ export function ChatAssistant() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [useOntology, setUseOntology] = useState(true);
   const [webSearchEnabled, setWebSearchEnabled] = useState(true);
   const [searchProvider, setSearchProvider] = useState('duckduckgo');
   const [webSources, setWebSources] = useState<WebSource[]>([]);
@@ -38,7 +39,7 @@ export function ChatAssistant() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           question: input,
-          use_ontology: true,
+          use_ontology: useOntology,
           use_web_search: webSearchEnabled,
           search_provider: searchProvider
         }),
@@ -108,8 +109,27 @@ export function ChatAssistant() {
         {/* Search Config */}
         <div className="px-6 py-3 bg-slate-50 border-b border-slate-200">
           <div className="flex items-center justify-between flex-wrap gap-3">
+            {/* Model Insight Toggle */}
             <div className="flex items-center gap-4">
-              {/* Toggle */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-slate-700">🧠 模型挖掘:</span>
+                <span className={`text-xs px-2 py-1 rounded-full ${useOntology ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-500'}`}>
+                  {useOntology ? '已启用' : '已禁用'}
+                </span>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  checked={useOntology}
+                  onChange={(e) => setUseOntology(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+
+            {/* Web Search Toggle */}
+            <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium text-slate-700">🌐 网络搜索:</span>
                 <span className={`text-xs px-2 py-1 rounded-full ${webSearchEnabled ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-500'}`}>
@@ -148,6 +168,14 @@ export function ChatAssistant() {
             <div className="mt-2 p-2 bg-blue-50 rounded-lg">
               <p className="text-xs text-blue-600">
                 💡 启用网络搜索将抓取全网最新资讯。推荐使用 DuckDuckGo（无需配置），如需 Bing/Google 请在 Settings 配置 API Key。
+              </p>
+            </div>
+          )}
+
+          {useOntology && (
+            <div className="mt-2 p-2 bg-purple-50 rounded-lg">
+              <p className="text-xs text-purple-600">
+                🧠 模型挖掘已启用，将结合 SemiKong 本体知识库 + MiniMax-M2.7 模型进行深度洞察分析。
               </p>
             </div>
           )}
