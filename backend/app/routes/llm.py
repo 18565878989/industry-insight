@@ -251,7 +251,45 @@ def search_config():
             'provider': search_api.get_provider(),
             'has_bing_key': bool(search_api.api_keys.get('bing')),
             'has_google_key': bool(search_api.api_keys.get('google')),
-            'available_providers': ['duckduckgo', 'bing', 'google']
+            'has_qianfan_key': bool(search_api.api_keys.get('qianfan')),
+            'available_providers': [
+                {
+                    'id': 'duckduckgo',
+                    'name': 'DuckDuckGo Lite',
+                    'cost': '免费',
+                    'auth': '无需鉴权',
+                    'limit': '无限制'
+                },
+                {
+                    'id': 'duckduckgo_instant',
+                    'name': 'DuckDuckGo Instant Answer',
+                    'cost': '免费',
+                    'auth': '无需鉴权',
+                    'limit': '无限制',
+                    'note': '返回直接答案和精选摘要'
+                },
+                {
+                    'id': 'bing',
+                    'name': 'Bing Search API',
+                    'cost': '商用',
+                    'auth': '需要 API Key',
+                    'limit': '根据订阅计划'
+                },
+                {
+                    'id': 'google',
+                    'name': 'Google Custom Search',
+                    'cost': '商用',
+                    'auth': '需要 API Key + CX',
+                    'limit': '每日100次免费'
+                },
+                {
+                    'id': 'qianfan',
+                    'name': '百度千帆 AI 搜索',
+                    'cost': '100次/日免费',
+                    'auth': '需要 API Key + Secret',
+                    'limit': '100次/日免费额度'
+                }
+            ]
         })
     
     # POST
@@ -275,8 +313,13 @@ def search_config():
         search_api.api_keys['google'] = data['google_api_key']
     
     if 'google_cx' in data:
-        import os
         os.environ['GOOGLE_CX'] = data['google_cx']
+    
+    if 'qianfan_api_key' in data:
+        search_api.api_keys['qianfan'] = data['qianfan_api_key']
+    
+    if 'qianfan_secret_key' in data:
+        search_api.api_keys['qianfan_secret'] = data['qianfan_secret_key']
     
     return jsonify({
         'success': True,
@@ -321,7 +364,8 @@ def status():
             'enabled': search_api.is_enabled(),
             'provider': search_api.get_provider(),
             'has_bing_key': bool(search_api.api_keys.get('bing')),
-            'has_google_key': bool(search_api.api_keys.get('google'))
+            'has_google_key': bool(search_api.api_keys.get('google')),
+            'has_qianfan_key': bool(search_api.api_keys.get('qianfan'))
         }
     })
 
@@ -357,6 +401,23 @@ def capabilities():
                     'endpoint': 'GET /api/llm/search/google',
                     'format': 'Google Custom Search API',
                     'params': ['q', 'num', 'start', 'gl', 'hl', 'cr', 'filetype']
+                },
+                'duckduckgo': {
+                    'endpoint': 'GET /api/llm/search?provider=duckduckgo',
+                    'format': 'DuckDuckGo Lite (零成本)',
+                    'params': ['q', 'max_results']
+                },
+                'duckduckgo_instant': {
+                    'endpoint': 'GET /api/llm/search?provider=duckduckgo_instant',
+                    'format': 'DuckDuckGo Instant Answer (零成本)',
+                    'params': ['q'],
+                    'note': '返回直接答案和精选摘要'
+                },
+                'qianfan': {
+                    'endpoint': 'GET /api/llm/search?provider=qianfan',
+                    'format': '百度千帆 AI 搜索 (商用)',
+                    'params': ['q', 'max_results'],
+                    'note': '100次/日免费额度'
                 },
                 'unified': {
                     'endpoint': 'GET /api/llm/search',
