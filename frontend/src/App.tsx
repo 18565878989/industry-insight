@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Sidebar } from './components/layout/Sidebar';
-import { Header } from './components/layout/Header';
 import { Dashboard } from './pages/Dashboard';
 import { CompanyList } from './components/company/CompanyList';
 import { CompanyDetail } from './components/company/CompanyDetail';
@@ -14,21 +13,16 @@ import { News } from './pages/News';
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex min-h-screen bg-slate-50">
+      <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50">
         <Sidebar />
         <main className="flex-1 flex flex-col min-w-0">
-          <Routes>
-            <Route path="/" element={<Header title="Dashboard" subtitle="Semiconductor Industry Overview" />} />
-            <Route path="/companies" element={<Header title="Companies" subtitle="Browse industry players" />} />
-            <Route path="/companies/:id" element={<Header title="Company Details" />} />
-            <Route path="/knowledge-graph" element={<Header title="Knowledge Graph" subtitle="Interactive relationship visualization" />} />
-            <Route path="/supply-chain" element={<Header title="Supply Chain" subtitle="Industry value chain analysis" />} />
-            <Route path="/analysis" element={<Header title="Analysis" subtitle="Trends and market insights" />} />
-            <Route path="/news" element={<Header title="Industry News" subtitle="Real-time industry updates" />} />
-            <Route path="/settings" element={<Header title="Settings" subtitle="System configuration" />} />
-            <Route path="/assistant" element={<Header title="AI Assistant" subtitle="SemiKong Knowledge Q&A" />} />
-          </Routes>
-          <div className="flex-1 p-6 overflow-auto">
+          {/* Top Navigation Bar */}
+          <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/70 border-b border-black/5">
+            <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+          </div>
+          
+          {/* Main Content Area */}
+          <div className="flex-1 p-6 lg:p-8 overflow-auto">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/companies" element={<CompanyList />} />
@@ -41,6 +35,14 @@ function App() {
               <Route path="/assistant" element={<ChatAssistant />} />
             </Routes>
           </div>
+          
+          {/* Footer */}
+          <footer className="border-t border-black/5 bg-white/50 backdrop-blur-sm py-4 px-6 lg:px-8">
+            <div className="flex items-center justify-between text-xs text-gray-400">
+              <span>© 2024 Industry Insight Platform. Semiconductor Supply Chain Intelligence.</span>
+              <span>Powered by SemiKong Ontology</span>
+            </div>
+          </footer>
         </main>
       </div>
     </BrowserRouter>

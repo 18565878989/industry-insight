@@ -1,4 +1,4 @@
-import { Search, Filter, Bell } from 'lucide-react';
+import { Search, Bell } from 'lucide-react';
 import { useState } from 'react';
 
 interface HeaderProps {
@@ -8,39 +8,65 @@ interface HeaderProps {
 
 export function Header({ title, subtitle }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-20">
+    <header className="bg-white/80 backdrop-blur-xl border-b border-black/5 sticky top-0 z-20">
       <div className="flex items-center justify-between px-6 py-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800">{title}</h1>
-          {subtitle && <p className="text-sm text-slate-500 mt-0.5">{subtitle}</p>}
+        {/* Title - Apple Style */}
+        <div className="flex items-center gap-3">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">{title}</h1>
+            {subtitle && <p className="text-sm text-gray-400 mt-0.5">{subtitle}</p>}
+          </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          {/* Search */}
-          <div className="relative hidden md:block">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        {/* Right Section */}
+        <div className="flex items-center gap-3">
+          {/* Search - Apple Style */}
+          <div 
+            className={`
+              relative hidden md:flex items-center
+              transition-all duration-300 ease-out
+              ${isSearchFocused ? 'w-80' : 'w-64'}
+            `}
+          >
+            <div 
+              className={`
+                absolute left-3 top-1/2 -translate-y-1/2
+                transition-colors duration-200
+                ${isSearchFocused ? 'text-violet-500' : 'text-gray-400'}
+              `}
+            >
+              <Search size={16} />
+            </div>
             <input
               type="text"
               placeholder="Search companies, products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-64 pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg
-                         text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
-                         placeholder:text-slate-400"
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setIsSearchFocused(false)}
+              className={`
+                w-full pl-10 pr-4 py-2.5 
+                bg-gray-100/80 backdrop-blur
+                border border-transparent
+                rounded-xl text-sm
+                placeholder:text-gray-400
+                transition-all duration-200
+                focus:outline-none
+                ${isSearchFocused 
+                  ? 'bg-white border-violet-200/50 shadow-lg shadow-violet-500/10' 
+                  : 'hover:bg-gray-100'
+                }
+              `}
             />
           </div>
 
-          {/* Filter button */}
-          <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-            <Filter size={20} className="text-slate-500" />
-          </button>
-
-          {/* Notifications */}
-          <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors relative">
-            <Bell size={20} className="text-slate-500" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
+          {/* Notifications - Apple Style */}
+          <button className="relative p-2.5 hover:bg-gray-100 rounded-xl transition-colors group">
+            <Bell size={20} className="text-gray-500 group-hover:text-gray-700 transition-colors" />
+            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
           </button>
         </div>
       </div>

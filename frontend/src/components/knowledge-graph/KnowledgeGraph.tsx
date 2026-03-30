@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as d3 from 'd3';
 import { relationshipsApi } from '../../services/api';
 import type { GraphData, GraphNode, GraphEdge } from '../../types';
-import { Filter, ZoomIn, ZoomOut, RefreshCw, Info } from 'lucide-react';
+import { Filter, ZoomIn, ZoomOut, RefreshCw, Info, X, ExternalLink } from 'lucide-react';
 
 interface SelectedNode {
   node: GraphNode;
@@ -49,14 +49,31 @@ export function KnowledgeGraph() {
     const width = container.clientWidth;
     const height = container.clientHeight;
 
-    // Clear previous graph
     d3.select(svgRef.current).selectAll('*').remove();
 
     const svg = d3.select(svgRef.current)
       .attr('width', width)
       .attr('height', height);
 
-    // Create zoom behavior
+    // Define gradients and filters
+    const defs = svg.append('defs');
+    
+    // Glow filter
+    const filter = defs.append('filter')
+      .attr('id', 'glow')
+      .attr('x', '-50%')
+      .attr('y', '-50%')
+      .attr('width', '200%')
+      .attr('height', '200%');
+    
+    filter.append('feGaussianBlur')
+      .attr('stdDeviation', '3')
+      .attr('result', 'coloredBlur');
+    
+    const feMerge = filter.append('feMerge');
+    feMerge.append('feMergeNode').attr('in', 'coloredBlur');
+    feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.1, 4])
       .on('zoom', (event) => {
@@ -67,7 +84,6 @@ export function KnowledgeGraph() {
 
     const g = svg.append('g');
 
-    // Filter edges based on selected relationship types
     const filteredEdges = selectedTypes.length === 0
       ? graphData.edges
       : graphData.edges.filter((e) => selectedTypes.includes(e.relationship_type));
@@ -80,7 +96,7 @@ export function KnowledgeGraph() {
 
     const filteredNodes = graphData.nodes.filter((n) => filteredNodeIds.has(n.id));
 
-    // Color scale for supply chain stages
+    // Apple-inspired color palette with gradients
     const stageColors: Record<string, string> = {
       'Design': '#8b5cf6',
       'EDA Tools': '#a855f7',
@@ -91,7 +107,6 @@ export function KnowledgeGraph() {
       'End Products': '#ef4444',
     };
 
-    // Edge color scale
     const edgeColors: Record<string, string> = {
       'SUPPLIES': '#3b82f6',
       'COMPETES': '#ef4444',
@@ -101,32 +116,39 @@ export function KnowledgeGraph() {
       'USES': '#06b6d4',
     };
 
-    // Create simulation
     const simulation = d3.forceSimulation<GraphNode>(filteredNodes)
       .force('link', d3.forceLink<GraphNode, GraphEdge>(filteredEdges)
         .id((d) => d.id)
-        .distance(120))
-      .force('charge', d3.forceManyBody().strength(-300))
+        .distance(180))
+      .force('charge', d3.forceManyBody().strength(-500))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide().radius(40));
+      .force('collision', d3.forceCollide().radius(60))
+      .force('x', d3.forceX(width / 2).strength(0.05))
+      .force('y', d3.forceY(height / 2).strength(0.05));
 
-    // Draw edges
+    // Edges with gradient and glow
     const link = g.append('g')
       .selectAll('line')
       .data(filteredEdges)
       .join('line')
       .attr('stroke', (d) => edgeColors[d.relationship_type] || '#94a3b8')
-      .attr('stroke-opacity', 0.6)
-      .attr('stroke-width', (d) => Math.max(1, (d.strength || 5) / 2))
+      .attr('stroke-opacity', 0.4)
+      .attr('stroke-width', (d) => Math.max(2, (d.strength || 5) / 2))
       .style('cursor', 'pointer')
       .on('mouseover', function() {
-        d3.select(this).attr('stroke-opacity', 1);
+        d3.select(this)
+          .attr('stroke-opacity', 0.9)
+          .attr('stroke-width', 4)
+          .attr('filter', 'url(#glow)');
       })
-      .on('mouseout', function() {
-        d3.select(this).attr('stroke-opacity', 0.6);
+      .on('mouseout', function(_, d) {
+        d3.select(this)
+          .attr('stroke-opacity', 0.4)
+          .attr('stroke-width', Math.max(2, (d.strength || 5) / 2))
+          .attr('filter', null);
       });
 
-    // Draw nodes
+    // Nodes with Apple style
     const node = g.append('g')
       .selectAll('g')
       .data(filteredNodes)
@@ -148,12 +170,20 @@ export function KnowledgeGraph() {
           d.fy = null;
         }) as any);
 
-    // Node circles
+    // Node outer glow circle
     node.append('circle')
-      .attr('r', (d) => Math.min(40, Math.max(15, (d.revenue || 0) / 5e10 + 15)))
+      .attr('r', (d) => Math.min(55, Math.max(22, (d.revenue || 0) / 5e10 + 22)) + 5)
       .attr('fill', (d) => stageColors[d.supply_chain_stage || ''] || '#64748b')
-      .attr('stroke', '#fff')
-      .attr('stroke-width', 2)
+      .attr('opacity', 0.2)
+      .attr('filter', 'url(#glow)');
+
+    // Node main circle
+    node.append('circle')
+      .attr('r', (d) => Math.min(50, Math.max(18, (d.revenue || 0) / 5e10 + 18)))
+      .attr('fill', (d) => stageColors[d.supply_chain_stage || ''] || '#64748b')
+      .attr('stroke', '#ffffff')
+      .attr('stroke-width', 4)
+      .style('filter', 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))')
       .on('click', (event, d) => {
         const rect = container.getBoundingClientRect();
         setSelectedNode({
@@ -165,23 +195,34 @@ export function KnowledgeGraph() {
       .on('dblclick', (_, d) => {
         navigate(`/companies/${d.id}`);
       })
-      .on('mouseover', (_, d) => {
+      .on('mouseover', function(_, d) {
         setHoveredNode(d);
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('r', Math.min(55, Math.max(22, (d.revenue || 0) / 5e10 + 22)))
+          .style('filter', 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))');
       })
-      .on('mouseout', () => {
+      .on('mouseout', function(_, d) {
         setHoveredNode(null);
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('r', Math.min(50, Math.max(18, (d.revenue || 0) / 5e10 + 18)))
+          .style('filter', 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))');
       });
 
     // Node labels
     node.append('text')
-      .text((d) => d.name.length > 12 ? d.name.substring(0, 12) + '...' : d.name)
+      .text((d) => d.name.length > 16 ? d.name.substring(0, 16) + '...' : d.name)
       .attr('text-anchor', 'middle')
-      .attr('dy', (d) => Math.min(40, Math.max(15, (d.revenue || 0) / 5e10 + 15)) + 15)
-      .attr('font-size', '10px')
-      .attr('fill', '#475569')
-      .attr('pointer-events', 'none');
+      .attr('dy', (d) => Math.min(50, Math.max(18, (d.revenue || 0) / 5e10 + 18)) + 24)
+      .attr('font-size', '12px')
+      .attr('font-weight', '600')
+      .attr('fill', '#374151')
+      .attr('pointer-events', 'none')
+      .style('text-shadow', '0 1px 2px rgba(255,255,255,0.8)');
 
-    // Update positions on simulation tick
     simulation.on('tick', () => {
       link
         .attr('x1', (d) => (d.source as GraphNode).x!)
@@ -192,8 +233,7 @@ export function KnowledgeGraph() {
       node.attr('transform', (d) => `translate(${d.x},${d.y})`);
     });
 
-    // Zoom to fit
-    const initialScale = 0.8;
+    const initialScale = 0.75;
     svg.call(
       zoom.transform,
       d3.zoomIdentity
@@ -209,7 +249,7 @@ export function KnowledgeGraph() {
 
   const handleZoomIn = () => {
     if (svgRef.current) {
-      d3.select(svgRef.current).transition().call(
+      d3.select(svgRef.current).transition().duration(300).call(
         d3.zoom<SVGSVGElement, unknown>().scaleBy as any,
         1.3
       );
@@ -218,7 +258,7 @@ export function KnowledgeGraph() {
 
   const handleZoomOut = () => {
     if (svgRef.current) {
-      d3.select(svgRef.current).transition().call(
+      d3.select(svgRef.current).transition().duration(300).call(
         d3.zoom<SVGSVGElement, unknown>().scaleBy as any,
         0.7
       );
@@ -238,39 +278,47 @@ export function KnowledgeGraph() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500" />
+      <div className="flex flex-col items-center justify-center h-[70vh] gap-6">
+        <div className="relative">
+          <div className="w-20 h-20 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin" />
+        </div>
+        <p className="text-gray-600 font-semibold text-lg">Loading knowledge graph...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
-        {error}
+      <div className="apple-alert apple-alert-error max-w-2xl mx-auto">
+        <div className="flex-1">
+          <h3 className="font-semibold mb-1">Error</h3>
+          <p className="text-sm opacity-80">{error}</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      {/* Controls */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+    <div className="space-y-5">
+      {/* Controls - Apple Glass Card */}
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg shadow-black/5 border border-black/5 p-5">
         <div className="flex flex-wrap items-center gap-4">
           {/* Relationship Type Filters */}
-          <div className="flex items-center gap-2">
-            <Filter size={16} className="text-slate-400" />
-            <span className="text-sm text-slate-600 font-medium">Filter:</span>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-violet-100 rounded-xl">
+              <Filter size={18} className="text-violet-600" />
+            </div>
+            <span className="text-sm font-bold text-gray-700">Filter:</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {relationshipTypes.map((type) => (
               <button
                 key={type}
                 onClick={() => toggleRelationshipType(type)}
-                className={`px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all duration-200 ${
                   selectedTypes.includes(type)
-                    ? 'bg-primary-100 text-primary-700'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg shadow-violet-500/30'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {type}
@@ -281,82 +329,87 @@ export function KnowledgeGraph() {
           <div className="flex items-center gap-2 ml-auto">
             <button
               onClick={handleZoomIn}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-3 bg-white/95 backdrop-blur-xl rounded-xl border border-black/5 hover:bg-white hover:shadow-lg transition-all duration-200"
               title="Zoom In"
             >
-              <ZoomIn size={18} className="text-slate-600" />
+              <ZoomIn size={20} className="text-gray-600" />
             </button>
             <button
               onClick={handleZoomOut}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-3 bg-white/95 backdrop-blur-xl rounded-xl border border-black/5 hover:bg-white hover:shadow-lg transition-all duration-200"
               title="Zoom Out"
             >
-              <ZoomOut size={18} className="text-slate-600" />
+              <ZoomOut size={20} className="text-gray-600" />
             </button>
             <button
               onClick={handleReset}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-3 bg-white/95 backdrop-blur-xl rounded-xl border border-black/5 hover:bg-white hover:shadow-lg transition-all duration-200"
               title="Reset"
             >
-              <RefreshCw size={18} className="text-slate-600" />
+              <RefreshCw size={20} className="text-gray-600" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Graph Container */}
+      {/* Graph Container - Apple Card */}
       <div
         ref={containerRef}
-        className="relative bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"
-        style={{ height: '600px' }}
+        className="relative bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl shadow-black/10 border border-black/5 overflow-hidden"
+        style={{ height: '650px' }}
       >
         <svg ref={svgRef} className="w-full h-full" />
 
-        {/* Node Info Tooltip */}
+        {/* Node Info Tooltip - Apple Glass */}
         {hoveredNode && !selectedNode && (
-          <div className="absolute top-4 left-4 bg-white rounded-lg p-3 shadow-lg border border-slate-200 max-w-xs">
-            <h4 className="font-semibold text-slate-800">{hoveredNode.name}</h4>
-            <p className="text-sm text-slate-500">{hoveredNode.supply_chain_stage}</p>
+          <div className="absolute top-5 left-5 bg-white/95 backdrop-blur-xl rounded-2xl p-5 shadow-2xl border border-black/5 max-w-xs">
+            <h4 className="font-bold text-gray-900 text-lg">{hoveredNode.name}</h4>
+            <p className="text-sm text-violet-600 font-bold mt-1">{hoveredNode.supply_chain_stage}</p>
             {hoveredNode.revenue && (
-              <p className="text-sm text-slate-600 mt-1">
+              <p className="text-sm text-gray-600 mt-3 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 bg-green-500 rounded-full" />
                 Revenue: ${(hoveredNode.revenue / 1e9).toFixed(1)}B
               </p>
             )}
           </div>
         )}
 
-        {/* Selected Node Panel */}
+        {/* Selected Node Panel - Apple Floating Panel */}
         {selectedNode && (
           <div
-            className="absolute bg-white rounded-lg p-4 shadow-lg border border-slate-200 max-w-xs"
-            style={{ left: Math.min(selectedNode.x + 10, containerRef.current!.clientWidth - 280), top: Math.min(selectedNode.y + 10, containerRef.current!.clientHeight - 200) }}
+            className="absolute bg-white/98 backdrop-blur-2xl rounded-2xl p-6 shadow-2xl border border-black/5 max-w-sm z-10 animate-fade-in-up"
+            style={{ 
+              left: Math.min(selectedNode.x + 10, (containerRef.current?.clientWidth || 800) - 320), 
+              top: Math.min(selectedNode.y + 10, (containerRef.current?.clientHeight || 600) - 280) 
+            }}
           >
-            <div className="flex items-start justify-between">
-              <h4 className="font-semibold text-slate-800">{selectedNode.node.name}</h4>
+            <div className="flex items-start justify-between mb-4">
+              <h4 className="font-bold text-gray-900 text-xl">{selectedNode.node.name}</h4>
               <button
                 onClick={() => setSelectedNode(null)}
-                className="text-slate-400 hover:text-slate-600"
+                className="p-2 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
               >
-                ×
+                <X size={16} className="text-gray-500" />
               </button>
             </div>
-            <p className="text-sm text-slate-500">{selectedNode.node.supply_chain_stage}</p>
+            <p className="text-sm text-violet-600 font-bold mb-3">{selectedNode.node.supply_chain_stage}</p>
             {selectedNode.node.sector && (
-              <p className="text-sm text-slate-600 mt-1">{selectedNode.node.sector}</p>
+              <p className="text-sm text-gray-600 mb-5">{selectedNode.node.sector}</p>
             )}
             <button
               onClick={() => navigate(`/companies/${selectedNode.node.id}`)}
-              className="mt-3 w-full px-3 py-2 bg-primary-500 text-white text-sm font-medium rounded-lg hover:bg-primary-600 transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-5 py-3.5 bg-gradient-to-r from-violet-600 to-purple-600 text-white text-sm font-bold rounded-xl hover:from-violet-700 hover:to-purple-700 shadow-lg shadow-violet-500/30 transition-all duration-200"
             >
               View Details
+              <ExternalLink size={14} />
             </button>
           </div>
         )}
 
-        {/* Legend */}
-        <div className="absolute bottom-4 left-4 bg-white rounded-lg p-3 shadow-lg border border-slate-200">
-          <p className="text-xs font-medium text-slate-600 mb-2">Supply Chain Stage</p>
-          <div className="space-y-1">
+        {/* Legend - Apple Glass Panel */}
+        <div className="absolute bottom-5 left-5 bg-white/95 backdrop-blur-xl rounded-2xl p-5 shadow-xl border border-black/5">
+          <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">Supply Chain Stage</p>
+          <div className="space-y-2.5">
             {[
               { stage: 'Design', color: '#8b5cf6' },
               { stage: 'EDA Tools', color: '#a855f7' },
@@ -366,28 +419,48 @@ export function KnowledgeGraph() {
               { stage: 'Packaging/Testing', color: '#f59e0b' },
               { stage: 'End Products', color: '#ef4444' },
             ].map(({ stage, color }) => (
-              <div key={stage} className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                <span className="text-xs text-slate-600">{stage}</span>
+              <div key={stage} className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full shadow-md" style={{ backgroundColor: color }} />
+                <span className="text-xs text-gray-600 font-semibold">{stage}</span>
               </div>
             ))}
           </div>
         </div>
+
+        {/* Stats Badge */}
+        <div className="absolute top-5 right-5 bg-white/95 backdrop-blur-xl rounded-xl px-4 py-2 shadow-lg border border-black/5">
+          <span className="text-sm font-bold text-gray-700">
+            {graphData?.nodes.length || 0} nodes • {graphData?.edges.length || 0} edges
+          </span>
+        </div>
       </div>
 
-      {/* Instructions */}
-      <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
-        <div className="flex items-start gap-3">
-          <Info size={18} className="text-slate-400 mt-0.5" />
-          <div className="text-sm text-slate-600">
-            <p className="font-medium text-slate-700 mb-1">How to use the Knowledge Graph</p>
-            <ul className="list-disc list-inside space-y-1">
-              <li>Click and drag nodes to move them</li>
-              <li>Scroll to zoom in/out</li>
-              <li>Click a node to see details</li>
-              <li>Double-click a node to go to company page</li>
-              <li>Use filters to show specific relationship types</li>
-            </ul>
+      {/* Instructions - Apple Card */}
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-6 shadow-lg border border-black/5">
+        <div className="flex items-start gap-4">
+          <div className="p-3 bg-blue-100 rounded-xl">
+            <Info size={22} className="text-blue-600" />
+          </div>
+          <div>
+            <p className="font-bold text-gray-900 text-lg mb-3">How to use the Knowledge Graph</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span className="w-2 h-2 bg-violet-500 rounded-full" />
+                Click and drag to move
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span className="w-2 h-2 bg-violet-500 rounded-full" />
+                Scroll to zoom
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span className="w-2 h-2 bg-violet-500 rounded-full" />
+                Click node for details
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span className="w-2 h-2 bg-violet-500 rounded-full" />
+                Double-click for company
+              </div>
+            </div>
           </div>
         </div>
       </div>
