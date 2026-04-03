@@ -149,9 +149,24 @@ const defaultOntologies: OntologyTab[] = [
                 count: 15, 
                 description: '极紫外光刻',
                 children: [
-                  { name: 'EUVSource', type: 'class', count: 5, description: 'EUV光源' },
-                  { name: 'EUVOptics', type: 'class', count: 5, description: 'EUV光学系统' },
-                  { name: 'EUVMask', type: 'class', count: 5, description: 'EUV掩模' },
+                  { name: 'EUVSource', type: 'class', count: 5, description: 'EUV光源',
+                    children: [
+                      { name: 'LPP_Source', type: 'class', count: 2, description: '激光等离子体光源' },
+                      { name: 'DPP_Source', type: 'class', count: 2, description: '放电等离子体光源' },
+                    ]
+                  },
+                  { name: 'EUVOptics', type: 'class', count: 5, description: 'EUV光学系统',
+                    children: [
+                      { name: 'Multilayer_Mirror', type: 'class', count: 2, description: '多层膜反射镜' },
+                      { name: 'Illumination', type: 'class', count: 2, description: '照明系统' },
+                    ]
+                  },
+                  { name: 'EUVMask', type: 'class', count: 5, description: 'EUV掩模',
+                    children: [
+                      { name: 'MultiLayer_Mask', type: 'class', count: 2, description: '多层掩模' },
+                      { name: 'Absorber_Pattern', type: 'class', count: 2, description: '吸收层图案' },
+                    ]
+                  },
                 ]
               },
               { 
@@ -160,9 +175,24 @@ const defaultOntologies: OntologyTab[] = [
                 count: 30, 
                 description: '深紫外光刻',
                 children: [
-                  { name: 'ArFi', type: 'class', count: 10, description: '浸没式ArF' },
-                  { name: 'KrF', type: 'class', count: 10, description: 'KrF激光' },
-                  { name: 'iLine', type: 'class', count: 10, description: 'i线光刻' },
+                  { name: 'ArFi', type: 'class', count: 10, description: '浸没式ArF',
+                    children: [
+                      { name: 'Immersion_Optics', type: 'class', count: 5, description: '浸没光学' },
+                      { name: 'High_Index_Lens', type: 'class', count: 5, description: '高折射率透镜' },
+                    ]
+                  },
+                  { name: 'KrF', type: 'class', count: 10, description: 'KrF激光',
+                    children: [
+                      { name: 'KrF_Laser', type: 'class', count: 5, description: 'KrF激光器' },
+                      { name: 'Step_Scan', type: 'class', count: 5, description: '步进扫描' },
+                    ]
+                  },
+                  { name: 'iLine', type: 'class', count: 10, description: 'i线光刻',
+                    children: [
+                      { name: 'iLine_Lamp', type: 'class', count: 5, description: 'i线光源' },
+                      { name: 'iLine_Optics', type: 'class', count: 5, description: 'i线光学' },
+                    ]
+                  },
                 ]
               },
             ]
@@ -270,9 +300,24 @@ const defaultOntologies: OntologyTab[] = [
                 count: 15, 
                 description: 'III-V族化合物',
                 children: [
-                  { name: 'GaAs', type: 'class', count: 5, description: '砷化镓' },
-                  { name: 'InP', type: 'class', count: 5, description: '磷化铟' },
-                  { name: 'GaN', type: 'class', count: 5, description: '氮化镓' },
+                  { name: 'GaAs', type: 'class', count: 5, description: '砷化镓',
+                    children: [
+                      { name: 'GaAs_Wafer', type: 'class', count: 2, description: 'GaAs晶圆' },
+                      { name: 'GaAs_Epi', type: 'class', count: 2, description: 'GaAs外延' },
+                    ]
+                  },
+                  { name: 'InP', type: 'class', count: 5, description: '磷化铟',
+                    children: [
+                      { name: 'InP_Wafer', type: 'class', count: 2, description: 'InP晶圆' },
+                      { name: 'InP_DH', type: 'class', count: 2, description: 'InP双异质结' },
+                    ]
+                  },
+                  { name: 'GaN', type: 'class', count: 5, description: '氮化镓',
+                    children: [
+                      { name: 'GaN_Substrate', type: 'class', count: 2, description: 'GaN衬底' },
+                      { name: 'GaN_Epi', type: 'class', count: 2, description: 'GaN外延' },
+                    ]
+                  },
                 ]
               },
               { 
@@ -281,8 +326,18 @@ const defaultOntologies: OntologyTab[] = [
                 count: 10, 
                 description: 'II-VI族化合物',
                 children: [
-                  { name: 'ZnSe', type: 'class', count: 5, description: '硒化锌' },
-                  { name: 'CdTe', type: 'class', count: 5, description: '碲化镉' },
+                  { name: 'ZnSe', type: 'class', count: 5, description: '硒化锌',
+                    children: [
+                      { name: 'ZnSe_Substrate', type: 'class', count: 2, description: 'ZnSe衬底' },
+                      { name: 'ZnSe_Layer', type: 'class', count: 2, description: 'ZnSe层' },
+                    ]
+                  },
+                  { name: 'CdTe', type: 'class', count: 5, description: '碲化镉',
+                    children: [
+                      { name: 'CdTe_ThinFilm', type: 'class', count: 2, description: 'CdTe薄膜' },
+                      { name: 'CdTe_Solar', type: 'class', count: 2, description: 'CdTe太阳能' },
+                    ]
+                  },
                 ]
               },
             ]
@@ -338,10 +393,34 @@ const defaultOntologies: OntologyTab[] = [
                 count: 12, 
                 description: '台积电',
                 children: [
-                  { name: 'TSMC_5nm', type: 'class', count: 3, description: '5nm产线' },
-                  { name: 'TSMC_3nm', type: 'class', count: 3, description: '3nm产线' },
-                  { name: 'TSMC_2nm', type: 'class', count: 3, description: '2nm产线' },
-                  { name: 'TSMC_CoWoS', type: 'class', count: 3, description: '先进封装' },
+                  { name: 'TSMC_5nm', type: 'class', count: 3, description: '5nm产线', 
+                    children: [
+                      { name: 'N5_Poly', type: 'class', count: 1, description: 'N5 Poly' },
+                      { name: 'N5_FinFET', type: 'class', count: 1, description: 'N5 FinFET' },
+                      { name: 'N5_EUV', type: 'class', count: 1, description: 'N5 EUV' },
+                    ]
+                  },
+                  { name: 'TSMC_3nm', type: 'class', count: 3, description: '3nm产线',
+                    children: [
+                      { name: 'N3_Nanosheet', type: 'class', count: 1, description: 'N3 纳米片' },
+                      { name: 'N3_GAA', type: 'class', count: 1, description: 'N3 GAA' },
+                      { name: 'N3_Efficiency', type: 'class', count: 1, description: 'N3 能效' },
+                    ]
+                  },
+                  { name: 'TSMC_2nm', type: 'class', count: 3, description: '2nm产线',
+                    children: [
+                      { name: 'N2_Nanosheet', type: 'class', count: 1, description: 'N2 纳米片' },
+                      { name: 'N2_CBC', type: 'class', count: 1, description: 'N2 环栅' },
+                      { name: 'N2_Process', type: 'class', count: 1, description: 'N2 工艺' },
+                    ]
+                  },
+                  { name: 'TSMC_CoWoS', type: 'class', count: 3, description: '先进封装',
+                    children: [
+                      { name: 'CoWoS_LSI', type: 'class', count: 1, description: 'CoWoS LSI' },
+                      { name: 'InFO_PoP', type: 'class', count: 1, description: 'InFO PoP' },
+                      { name: 'SoIC', type: 'class', count: 1, description: 'SoIC' },
+                    ]
+                  },
                 ]
               },
               { 
@@ -350,8 +429,18 @@ const defaultOntologies: OntologyTab[] = [
                 count: 10, 
                 description: '三星代工',
                 children: [
-                  { name: 'Samsung_3nm', type: 'class', count: 5, description: '3nm GAA' },
-                  { name: 'Samsung_4nm', type: 'class', count: 5, description: '4nm FinFET' },
+                  { name: 'Samsung_3nm', type: 'class', count: 5, description: '3nm GAA',
+                    children: [
+                      { name: 'GAA_MOSFET', type: 'class', count: 2, description: 'GAA MOSFET' },
+                      { name: 'MBCFET', type: 'class', count: 2, description: 'MBCFET' },
+                    ]
+                  },
+                  { name: 'Samsung_4nm', type: 'class', count: 5, description: '4nm FinFET',
+                    children: [
+                      { name: '4nm_Node', type: 'class', count: 2, description: '4nm节点' },
+                      { name: '4nm_Performance', type: 'class', count: 2, description: '4nm性能' },
+                    ]
+                  },
                 ]
               },
               { 
@@ -446,8 +535,18 @@ const defaultOntologies: OntologyTab[] = [
                 count: 4, 
                 description: '训练芯片',
                 children: [
-                  { name: 'Nvidia_A100', type: 'class', count: 2, description: 'A100' },
-                  { name: 'Nvidia_H100', type: 'class', count: 2, description: 'H100' },
+                  { name: 'Nvidia_A100', type: 'class', count: 2, description: 'A100',
+                    children: [
+                      { name: 'A100_SXM', type: 'class', count: 1, description: 'A100 SXM' },
+                      { name: 'A100_PCIe', type: 'class', count: 1, description: 'A100 PCIe' },
+                    ]
+                  },
+                  { name: 'Nvidia_H100', type: 'class', count: 2, description: 'H100',
+                    children: [
+                      { name: 'H100_SXM', type: 'class', count: 1, description: 'H100 SXM' },
+                      { name: 'H100_PCIe', type: 'class', count: 1, description: 'H100 PCIe' },
+                    ]
+                  },
                 ]
               },
               { 
@@ -456,8 +555,18 @@ const defaultOntologies: OntologyTab[] = [
                 count: 4, 
                 description: '推理芯片',
                 children: [
-                  { name: 'Infer_Chip_1', type: 'class', count: 2, description: '推理芯片A' },
-                  { name: 'Infer_Chip_2', type: 'class', count: 2, description: '推理芯片B' },
+                  { name: 'Infer_Chip_1', type: 'class', count: 2, description: '推理芯片A',
+                    children: [
+                      { name: 'Infer_Core', type: 'class', count: 1, description: '推理核心' },
+                      { name: 'Infer_Accelerator', type: 'class', count: 1, description: '推理加速器' },
+                    ]
+                  },
+                  { name: 'Infer_Chip_2', type: 'class', count: 2, description: '推理芯片B',
+                    children: [
+                      { name: 'Edge_Infer', type: 'class', count: 1, description: '边缘推理' },
+                      { name: 'Cloud_Infer', type: 'class', count: 1, description: '云端推理' },
+                    ]
+                  },
                 ]
               },
             ]
