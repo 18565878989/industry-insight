@@ -12,23 +12,12 @@ from typing import List, Dict, Any
 
 # 半导体行业 RSS 订阅源列表
 SEMI_RSS_FEEDS = [
-    # 深度技术与产业洞察
+    # 深度技术与产业洞察 - 最可靠快速的源
     {"name": "Semiconductor Engineering", "url": "https://semiengineering.com/feed/", "category": "Technology"},
     {"name": "SemiWiki", "url": "https://semiwiki.com/feed/", "category": "Technology"},
-    {"name": "IEEE Spectrum Computing", "url": "https://spectrum.ieee.org/feeds/topic/computing.rss", "category": "AI"},
-    
-    # 全球供应链与市场动向
-    {"name": "DIGITIMES", "url": "https://www.digitimes.com/rss/daily.xml", "category": "Supply Chain"},
-    {"name": "EE Times", "url": "https://www.eetimes.com/category/semiconductors/feed/", "category": "Market"},
-    {"name": "Semiconductor Today", "url": "https://www.semiconductor-today.com/rss/news.xml", "category": "Technology"},
-    
-    # 行业协会与官方政策
-    {"name": "SEMI", "url": "https://www.semi.org/en/news-media-press/semi-press-releases/rss", "category": "Policy"},
-    {"name": "SIA", "url": "https://www.semiconductors.org/feed/", "category": "Policy"},
-    
-    # AI 与先进制程
     {"name": "Tech Xplore", "url": "https://techxplore.com/rss-feed/semiconductors-news/", "category": "Advanced"},
-    {"name": "The Next Platform", "url": "https://www.nextplatform.com/category/silicon/feed/", "category": "Silicon"},
+    {"name": "Semiconductor Today", "url": "https://www.semiconductor-today.com/rss/news.xml", "category": "Technology"},
+    {"name": "EE Times", "url": "https://www.eetimes.com/feed/", "category": "Market"},
 ]
 
 # RSSHub 源 (国内源)
@@ -45,7 +34,7 @@ class NewsService:
         self.last_fetch = None
         self.news_data = []
         self.fetch_interval_hours = 2  # 默认2小时抓取一次
-        self.timeout = 15  # 请求超时时间
+        self.timeout = 10  # 请求超时时间
     
     def enable(self):
         self.enabled = True
@@ -146,7 +135,17 @@ class NewsService:
         req = urllib.request.Request(feed['url'], headers=headers)
         
         with urllib.request.urlopen(req, timeout=self.timeout) as response:
-            xml_content = response.read().decode('utf-8')
+            raw_content = response.read()
+            # 尝试多种编码
+            xml_content = None
+            for encoding in ['utf-8', 'utf-8-sig', 'big5', 'gb2312', 'gbk', 'latin-1']:
+                try:
+                    xml_content = raw_content.decode(encoding)
+                    break
+                except:
+                    continue
+            if xml_content is None:
+                xml_content = raw_content.decode('utf-8', errors='replace')
         
         return self._parse_rss(xml_content, feed)
     

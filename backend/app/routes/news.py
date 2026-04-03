@@ -48,11 +48,10 @@ def refresh_news():
     news_service = get_news_service()
     
     keywords = request.get_json() or {}
-    kw_list = keywords.get('keywords', [
-        '半导体', '芯片', '长江存储', '台积电', '光刻机'
-    ])
+    kw_list = keywords.get('keywords', None)  # 默认不筛选关键词
     
-    if isinstance(kw_list, str):
+    # 如果提供关键词且是字符串
+    if kw_list and isinstance(kw_list, str):
         kw_list = kw_list.split(',')
     
     news = news_service.fetch_industry_news(keywords=kw_list)
