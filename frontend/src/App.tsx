@@ -10,6 +10,7 @@ import { TrendAnalysis } from './components/analysis/TrendAnalysis';
 import { Settings } from './components/settings/Settings';
 import { ChatAssistant } from './components/chat/ChatAssistant';
 import { News } from './pages/News';
+import { OntologyView } from './components/ontology/OntologyView';
 
 function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>(
@@ -39,6 +40,7 @@ function App() {
               <Route path="/knowledge-graph" element={<KnowledgeGraph />} />
               <Route path="/supply-chain" element={<SupplyChainView />} />
               <Route path="/analysis" element={<TrendAnalysis />} />
+              <Route path="/ontology" element={<OntologyView />} />
               <Route path="/news" element={<News />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/assistant" element={<ChatAssistant />} />

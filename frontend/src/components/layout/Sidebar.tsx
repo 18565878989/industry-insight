@@ -13,6 +13,7 @@ import {
   Cpu,
   Sun,
   Moon,
+  Brain,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -20,6 +21,7 @@ const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/companies', icon: Building2, label: 'Companies' },
   { to: '/knowledge-graph', icon: Network, label: 'Knowledge Graph' },
+  { to: '/ontology', icon: Brain, label: 'Ontology' },
   { to: '/supply-chain', icon: GitBranch, label: 'Supply Chain' },
   { to: '/analysis', icon: TrendingUp, label: 'Analysis' },
   { to: '/news', icon: Newspaper, label: 'Industry News' },
