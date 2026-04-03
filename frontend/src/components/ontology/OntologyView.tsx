@@ -7,6 +7,9 @@ interface OntologyNode {
   count?: number;
   children?: OntologyNode[];
   description?: string;
+  // 额外信息
+  examples?: string[];      // 示例实体
+  properties?: string[];    // 相关属性
 }
 
 interface OntologyTab {
@@ -34,10 +37,46 @@ const defaultOntologies: OntologyTab[] = [
         count: 15,
         description: '半导体物理基础',
         children: [
-          { name: 'SemiconductorPhysics', type: 'class', count: 5, description: '基础物理理论' },
-          { name: 'MaterialProperties', type: 'class', count: 4, description: '材料特性' },
-          { name: 'QuantumEffects', type: 'class', count: 3, description: '量子效应' },
-          { name: 'DevicePhysics', type: 'class', count: 3, description: '器件物理' },
+          { 
+            name: 'SemiconductorPhysics', 
+            type: 'class', 
+            count: 5, 
+            description: '基础物理理论',
+            children: [
+              { name: 'BandTheory', type: 'class', count: 2, description: '能带理论' },
+              { name: 'CarrierTransport', type: 'class', count: 3, description: '载流子传输' },
+            ]
+          },
+          { 
+            name: 'MaterialProperties', 
+            type: 'class', 
+            count: 4, 
+            description: '材料特性',
+            children: [
+              { name: 'ElectricalProperties', type: 'class', count: 2, description: '电学特性' },
+              { name: 'OpticalProperties', type: 'class', count: 2, description: '光学特性' },
+            ]
+          },
+          { 
+            name: 'QuantumEffects', 
+            type: 'class', 
+            count: 3, 
+            description: '量子效应',
+            children: [
+              { name: 'TunnelingEffect', type: 'class', count: 1, description: '隧穿效应' },
+              { name: 'QuantumConfinement', type: 'class', count: 2, description: '量子限域' },
+            ]
+          },
+          { 
+            name: 'DevicePhysics', 
+            type: 'class', 
+            count: 3, 
+            description: '器件物理',
+            children: [
+              { name: 'PNJunction', type: 'class', count: 1, description: 'PN结' },
+              { name: 'MOSPhysics', type: 'class', count: 2, description: 'MOS物理' },
+            ]
+          },
         ],
       },
       {
@@ -46,47 +85,50 @@ const defaultOntologies: OntologyTab[] = [
         count: 15,
         description: '半导体器件',
         children: [
-          { name: 'MOSFET', type: 'class', count: 4, description: 'MOS晶体管' },
-          { name: 'BJT', type: 'class', count: 3, description: '双极晶体管' },
-          { name: 'CMOS', type: 'class', count: 4, description: 'CMOS器件' },
-          { name: 'MemoryDevices', type: 'class', count: 4, description: '存储器件' },
-        ],
-      },
-      {
-        name: 'FABLESS',
-        type: 'class',
-        count: 26,
-        description: '无晶圆厂设计',
-        children: [
-          { name: 'AI_Chips', type: 'class', count: 8, description: 'AI芯片' },
-          { name: 'GPU_Designs', type: 'class', count: 6, description: 'GPU设计' },
-          { name: 'CPU_Cores', type: 'class', count: 7, description: 'CPU核心' },
-          { name: 'FPGA', type: 'class', count: 5, description: '可编程逻辑' },
-        ],
-      },
-      {
-        name: 'EDA',
-        type: 'class',
-        count: 19,
-        description: '设计工具',
-        children: [
-          { name: 'Synthesis', type: 'class', count: 4, description: '逻辑综合' },
-          { name: 'PlaceRoute', type: 'class', count: 5, description: '布局布线' },
-          { name: 'Verification', type: 'class', count: 6, description: '验证工具' },
-          { name: 'Simulation', type: 'class', count: 4, description: '仿真工具' },
-        ],
-      },
-      {
-        name: 'FOUNDRY_IDM',
-        type: 'class',
-        count: 76,
-        description: '晶圆厂/IDM',
-        children: [
-          { name: 'TSMC', type: 'class', count: 12, description: '台积电' },
-          { name: 'Samsung', type: 'class', count: 10, description: '三星' },
-          { name: 'Intel', type: 'class', count: 11, description: '英特尔' },
-          { name: 'SMIC', type: 'class', count: 8, description: '中芯国际' },
-          { name: 'GlobalFoundries', type: 'class', count: 9, description: '格芯' },
+          { 
+            name: 'MOSFET', 
+            type: 'class', 
+            count: 4, 
+            description: 'MOS晶体管',
+            children: [
+              { name: 'NMOS', type: 'class', count: 1, description: 'N型MOS' },
+              { name: 'PMOS', type: 'class', count: 1, description: 'P型MOS' },
+              { name: 'CMOS', type: 'class', count: 2, description: 'CMOS器件' },
+            ]
+          },
+          { 
+            name: 'BJT', 
+            type: 'class', 
+            count: 3, 
+            description: '双极晶体管',
+            children: [
+              { name: 'NPN', type: 'class', count: 1, description: 'NPN型' },
+              { name: 'PNP', type: 'class', count: 1, description: 'PNP型' },
+              { name: 'HBT', type: 'class', count: 1, description: '异质结' },
+            ]
+          },
+          { 
+            name: 'MemoryDevices', 
+            type: 'class', 
+            count: 4, 
+            description: '存储器件',
+            children: [
+              { name: 'SRAM', type: 'class', count: 1, description: '静态随机存取' },
+              { name: 'DRAM', type: 'class', count: 1, description: '动态随机存取' },
+              { name: 'Flash', type: 'class', count: 2, description: '闪存' },
+            ]
+          },
+          { 
+            name: 'PowerDevices', 
+            type: 'class', 
+            count: 4, 
+            description: '功率器件',
+            children: [
+              { name: 'IGBT', type: 'class', count: 1, description: '绝缘栅双极' },
+              { name: 'MOSFET_Power', type: 'class', count: 1, description: '功率MOS' },
+              { name: 'SiC_Device', type: 'class', count: 2, description: '碳化硅器件' },
+            ]
+          },
         ],
       },
       {
@@ -95,11 +137,108 @@ const defaultOntologies: OntologyTab[] = [
         count: 250,
         description: '设备',
         children: [
-          { name: 'Lithography', type: 'class', count: 45, description: '光刻机' },
-          { name: 'Etch', type: 'class', count: 38, description: '刻蚀机' },
-          { name: 'Deposition', type: 'class', count: 42, description: '沉积设备' },
-          { name: 'Inspection', type: 'class', count: 35, description: '检测设备' },
-          { name: 'Packaging', type: 'class', count: 28, description: '封装设备' },
+          { 
+            name: 'Lithography', 
+            type: 'class', 
+            count: 45, 
+            description: '光刻机',
+            children: [
+              { 
+                name: 'EUVL', 
+                type: 'class', 
+                count: 15, 
+                description: '极紫外光刻',
+                children: [
+                  { name: 'EUVSource', type: 'class', count: 5, description: 'EUV光源' },
+                  { name: 'EUVOptics', type: 'class', count: 5, description: 'EUV光学系统' },
+                  { name: 'EUVMask', type: 'class', count: 5, description: 'EUV掩模' },
+                ]
+              },
+              { 
+                name: 'DUVL', 
+                type: 'class', 
+                count: 30, 
+                description: '深紫外光刻',
+                children: [
+                  { name: 'ArFi', type: 'class', count: 10, description: '浸没式ArF' },
+                  { name: 'KrF', type: 'class', count: 10, description: 'KrF激光' },
+                  { name: 'iLine', type: 'class', count: 10, description: 'i线光刻' },
+                ]
+              },
+            ]
+          },
+          { 
+            name: 'Etch', 
+            type: 'class', 
+            count: 38, 
+            description: '刻蚀机',
+            children: [
+              { 
+                name: 'DryEtch', 
+                type: 'class', 
+                count: 28, 
+                description: '干法刻蚀',
+                children: [
+                  { name: 'RIE', type: 'class', count: 10, description: '反应离子刻蚀' },
+                  { name: 'ICP', type: 'class', count: 10, description: '电感耦合等离子体' },
+                  { name: 'CCP', type: 'class', count: 8, description: '电容耦合等离子体' },
+                ]
+              },
+              { name: 'WetEtch', type: 'class', count: 10, description: '湿法刻蚀' },
+            ]
+          },
+          { 
+            name: 'Deposition', 
+            type: 'class', 
+            count: 42, 
+            description: '沉积设备',
+            children: [
+              { 
+                name: 'CVD', 
+                type: 'class', 
+                count: 22, 
+                description: '化学气相沉积',
+                children: [
+                  { name: 'PECVD', type: 'class', count: 8, description: '等离子体CVD' },
+                  { name: 'LPCVD', type: 'class', count: 7, description: '低压CVD' },
+                  { name: 'APCVD', type: 'class', count: 7, description: '常压CVD' },
+                ]
+              },
+              { 
+                name: 'PVD', 
+                type: 'class', 
+                count: 20, 
+                description: '物理气相沉积',
+                children: [
+                  { name: 'Sputtering', type: 'class', count: 8, description: '磁控溅射' },
+                  { name: 'Evaporation', type: 'class', count: 6, description: '热蒸发' },
+                  { name: 'ALD', type: 'class', count: 6, description: '原子层沉积' },
+                ]
+              },
+            ]
+          },
+          { 
+            name: 'Inspection', 
+            type: 'class', 
+            count: 35, 
+            description: '检测设备',
+            children: [
+              { name: 'OpticalInspection', type: 'class', count: 15, description: '光学检测' },
+              { name: 'ElectronInspection', type: 'class', count: 12, description: '电子束检测' },
+              { name: 'XrayInspection', type: 'class', count: 8, description: 'X射线检测' },
+            ]
+          },
+          { 
+            name: 'Packaging', 
+            type: 'class', 
+            count: 28, 
+            description: '封装设备',
+            children: [
+              { name: 'WireBonding', type: 'class', count: 10, description: '引线键合' },
+              { name: 'FlipChip', type: 'class', count: 10, description: '倒装芯片' },
+              { name: 'DieAttach', type: 'class', count: 8, description: '芯片贴装' },
+            ]
+          },
         ],
       },
       {
@@ -108,11 +247,301 @@ const defaultOntologies: OntologyTab[] = [
         count: 125,
         description: '材料',
         children: [
-          { name: 'Silicon', type: 'class', count: 18, description: '硅材料' },
-          { name: 'GaAs', type: 'class', count: 15, description: '砷化镓' },
-          { name: 'SiC', type: 'class', count: 12, description: '碳化硅' },
-          { name: 'Photoresist', type: 'class', count: 22, description: '光刻胶' },
-          { name: 'DopingMaterials', type: 'class', count: 16, description: '掺杂材料' },
+          { 
+            name: 'Silicon', 
+            type: 'class', 
+            count: 18, 
+            description: '硅材料',
+            children: [
+              { name: 'MonocrystallineSi', type: 'class', count: 6, description: '单晶硅' },
+              { name: 'PolycrystallineSi', type: 'class', count: 6, description: '多晶硅' },
+              { name: 'SiliconWafer', type: 'class', count: 6, description: '硅晶圆' },
+            ]
+          },
+          { 
+            name: 'CompoundSemiconductor', 
+            type: 'class', 
+            count: 25, 
+            description: '化合物半导体',
+            children: [
+              { 
+                name: 'III-V', 
+                type: 'class', 
+                count: 15, 
+                description: 'III-V族化合物',
+                children: [
+                  { name: 'GaAs', type: 'class', count: 5, description: '砷化镓' },
+                  { name: 'InP', type: 'class', count: 5, description: '磷化铟' },
+                  { name: 'GaN', type: 'class', count: 5, description: '氮化镓' },
+                ]
+              },
+              { 
+                name: 'II-VI', 
+                type: 'class', 
+                count: 10, 
+                description: 'II-VI族化合物',
+                children: [
+                  { name: 'ZnSe', type: 'class', count: 5, description: '硒化锌' },
+                  { name: 'CdTe', type: 'class', count: 5, description: '碲化镉' },
+                ]
+              },
+            ]
+          },
+          { 
+            name: 'WideBandgap', 
+            type: 'class', 
+            count: 20, 
+            description: '宽禁带半导体',
+            children: [
+              { name: 'SiC', type: 'class', count: 10, description: '碳化硅' },
+              { name: 'GaN', type: 'class', count: 10, description: '氮化镓' },
+            ]
+          },
+          { 
+            name: 'Photoresist', 
+            type: 'class', 
+            count: 22, 
+            description: '光刻胶',
+            children: [
+              { name: 'PositivePR', type: 'class', count: 8, description: '正性光刻胶' },
+              { name: 'NegativePR', type: 'class', count: 8, description: '负性光刻胶' },
+              { name: 'EUVPR', type: 'class', count: 6, description: 'EUV光刻胶' },
+            ]
+          },
+          { 
+            name: 'DopingMaterials', 
+            type: 'class', 
+            count: 16, 
+            description: '掺杂材料',
+            children: [
+              { name: 'NTypeDopants', type: 'class', count: 8, description: 'N型掺杂剂' },
+              { name: 'PTypeDopants', type: 'class', count: 8, description: 'P型掺杂剂' },
+            ]
+          },
+        ],
+      },
+      {
+        name: 'FOUNDRY_IDM',
+        type: 'class',
+        count: 76,
+        description: '晶圆厂/IDM',
+        children: [
+          { 
+            name: 'Foundry', 
+            type: 'class', 
+            count: 40, 
+            description: '代工厂',
+            children: [
+              { 
+                name: 'TSMC', 
+                type: 'class', 
+                count: 12, 
+                description: '台积电',
+                children: [
+                  { name: 'TSMC_5nm', type: 'class', count: 3, description: '5nm产线' },
+                  { name: 'TSMC_3nm', type: 'class', count: 3, description: '3nm产线' },
+                  { name: 'TSMC_2nm', type: 'class', count: 3, description: '2nm产线' },
+                  { name: 'TSMC_CoWoS', type: 'class', count: 3, description: '先进封装' },
+                ]
+              },
+              { 
+                name: 'Samsung_Foundry', 
+                type: 'class', 
+                count: 10, 
+                description: '三星代工',
+                children: [
+                  { name: 'Samsung_3nm', type: 'class', count: 5, description: '3nm GAA' },
+                  { name: 'Samsung_4nm', type: 'class', count: 5, description: '4nm FinFET' },
+                ]
+              },
+              { 
+                name: 'GlobalFoundries', 
+                type: 'class', 
+                count: 9, 
+                description: '格芯',
+                children: [
+                  { name: 'GF_14nm', type: 'class', count: 3, description: '14nm' },
+                  { name: 'GF_22nm', type: 'class', count: 3, description: '22nm FD-SOI' },
+                  { name: 'GF_28nm', type: 'class', count: 3, description: '28nm' },
+                ]
+              },
+              { 
+                name: 'SMIC', 
+                type: 'class', 
+                count: 9, 
+                description: '中芯国际',
+                children: [
+                  { name: 'SMIC_14nm', type: 'class', count: 3, description: '14nm' },
+                  { name: 'SMIC_28nm', type: 'class', count: 3, description: '28nm' },
+                  { name: 'SMIC_28nm_HK', type: 'class', count: 3, description: '28nm HKMG' },
+                ]
+              },
+            ]
+          },
+          { 
+            name: 'IDM', 
+            type: 'class', 
+            count: 36, 
+            description: '集成器件制造商',
+            children: [
+              { 
+                name: 'Intel', 
+                type: 'class', 
+                count: 11, 
+                description: '英特尔',
+                children: [
+                  { name: 'Intel_Process', type: 'class', count: 5, description: '制程技术' },
+                  { name: 'Intel_Products', type: 'class', count: 6, description: '产品线' },
+                ]
+              },
+              { 
+                name: 'Samsung_IDM', 
+                type: 'class', 
+                count: 10, 
+                description: '三星电子',
+                children: [
+                  { name: 'Samsung_Memory', type: 'class', count: 5, description: '存储芯片' },
+                  { name: 'Samsung_Logic', type: 'class', count: 5, description: '逻辑芯片' },
+                ]
+              },
+              { 
+                name: 'Micron', 
+                type: 'class', 
+                count: 8, 
+                description: '美光',
+                children: [
+                  { name: 'DRAM_Products', type: 'class', count: 4, description: 'DRAM产品' },
+                  { name: 'NAND_Products', type: 'class', count: 4, description: 'NAND产品' },
+                ]
+              },
+              { 
+                name: 'SK_Hynix', 
+                type: 'class', 
+                count: 7, 
+                description: 'SK海力士',
+                children: [
+                  { name: 'Hynix_DRAM', type: 'class', count: 4, description: 'DRAM' },
+                  { name: 'Hynix_NAND', type: 'class', count: 3, description: 'NAND' },
+                ]
+              },
+            ]
+          },
+        ],
+      },
+      {
+        name: 'FABLESS',
+        type: 'class',
+        count: 26,
+        description: '无晶圆厂设计',
+        children: [
+          { 
+            name: 'AI_Chips', 
+            type: 'class', 
+            count: 8, 
+            description: 'AI芯片',
+            children: [
+              { 
+                name: 'Training', 
+                type: 'class', 
+                count: 4, 
+                description: '训练芯片',
+                children: [
+                  { name: 'Nvidia_A100', type: 'class', count: 2, description: 'A100' },
+                  { name: 'Nvidia_H100', type: 'class', count: 2, description: 'H100' },
+                ]
+              },
+              { 
+                name: 'Inference', 
+                type: 'class', 
+                count: 4, 
+                description: '推理芯片',
+                children: [
+                  { name: 'Infer_Chip_1', type: 'class', count: 2, description: '推理芯片A' },
+                  { name: 'Infer_Chip_2', type: 'class', count: 2, description: '推理芯片B' },
+                ]
+              },
+            ]
+          },
+          { 
+            name: 'GPU_Designs', 
+            type: 'class', 
+            count: 6, 
+            description: 'GPU设计',
+            children: [
+              { name: 'Gaming_GPU', type: 'class', count: 3, description: '游戏GPU' },
+              { name: 'Professional_GPU', type: 'class', count: 3, description: '专业GPU' },
+            ]
+          },
+          { 
+            name: 'CPU_Cores', 
+            type: 'class', 
+            count: 7, 
+            description: 'CPU核心',
+            children: [
+              { name: 'x86_Design', type: 'class', count: 4, description: 'x86架构' },
+              { name: 'ARM_Design', type: 'class', count: 3, description: 'ARM架构' },
+            ]
+          },
+          { 
+            name: 'FPGA', 
+            type: 'class', 
+            count: 5, 
+            description: '可编程逻辑',
+            children: [
+              { name: 'High-End_FPGA', type: 'class', count: 3, description: '高端FPGA' },
+              { name: 'Mid-Range_FPGA', type: 'class', count: 2, description: '中端FPGA' },
+            ]
+          },
+        ],
+      },
+      {
+        name: 'EDA',
+        type: 'class',
+        count: 19,
+        description: '设计工具',
+        children: [
+          { 
+            name: 'Synthesis', 
+            type: 'class', 
+            count: 4, 
+            description: '逻辑综合',
+            children: [
+              { name: 'LogicSynthesis', type: 'class', count: 2, description: '逻辑综合' },
+              { name: 'DFT_Synthesis', type: 'class', count: 2, description: '可测性设计' },
+            ]
+          },
+          { 
+            name: 'PlaceRoute', 
+            type: 'class', 
+            count: 5, 
+            description: '布局布线',
+            children: [
+              { name: 'Floorplanning', type: 'class', count: 2, description: '布局规划' },
+              { name: 'Placement', type: 'class', count: 1, description: '布局' },
+              { name: 'Routing', type: 'class', count: 2, description: '布线' },
+            ]
+          },
+          { 
+            name: 'Verification', 
+            type: 'class', 
+            count: 6, 
+            description: '验证工具',
+            children: [
+              { name: 'Formal_Verification', type: 'class', count: 2, description: '形式验证' },
+              { name: 'Timing_Verification', type: 'class', count: 2, description: '时序验证' },
+              { name: 'Power_Verification', type: 'class', count: 2, description: '功耗验证' },
+            ]
+          },
+          { 
+            name: 'Simulation', 
+            type: 'class', 
+            count: 4, 
+            description: '仿真工具',
+            children: [
+              { name: 'Circuit_Simulation', type: 'class', count: 2, description: '电路仿真' },
+              { name: 'Timing_Simulation', type: 'class', count: 2, description: '时序仿真' },
+            ]
+          },
         ],
       },
       {
@@ -121,9 +550,37 @@ const defaultOntologies: OntologyTab[] = [
         count: 21,
         description: '供应链',
         children: [
-          { name: 'RawMaterials', type: 'class', count: 6, description: '原材料' },
-          { name: 'Equipment', type: 'class', count: 8, description: '设备供应' },
-          { name: 'Logistics', type: 'class', count: 7, description: '物流' },
+          { 
+            name: 'RawMaterials', 
+            type: 'class', 
+            count: 6, 
+            description: '原材料',
+            children: [
+              { name: 'Silicon_Material', type: 'class', count: 2, description: '硅原料' },
+              { name: 'Chemical_Materials', type: 'class', count: 2, description: '化学材料' },
+              { name: 'Gas_Materials', type: 'class', count: 2, description: '气体材料' },
+            ]
+          },
+          { 
+            name: 'Equipment', 
+            type: 'class', 
+            count: 8, 
+            description: '设备供应',
+            children: [
+              { name: 'Equipment_Maintenance', type: 'class', count: 4, description: '设备维护' },
+              { name: 'Equipment_Parts', type: 'class', count: 4, description: '备件供应' },
+            ]
+          },
+          { 
+            name: 'Logistics', 
+            type: 'class', 
+            count: 7, 
+            description: '物流',
+            children: [
+              { name: 'Wafer_Logistics', type: 'class', count: 3, description: '晶圆物流' },
+              { name: 'Chemical_Logistics', type: 'class', count: 4, description: '化学品物流' },
+            ]
+          },
         ],
       },
     ],
