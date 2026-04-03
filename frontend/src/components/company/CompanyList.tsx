@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, ChevronLeft, ChevronRight, Building2, MapPin, Users, DollarSign, Sparkles, X, Grid, List } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Building2, MapPin, Users, DollarSign, X, Grid, List } from 'lucide-react';
 import { companiesApi } from '../../services/api';
 import type { Company } from '../../types';
 
@@ -67,19 +67,6 @@ export function CompanyList() {
     return `$${value.toFixed(0)}`;
   };
 
-  const getStageColor = (stage: string | null) => {
-    switch (stage) {
-      case 'Design': return 'bg-gradient-to-r from-purple-50 to-violet-50 text-purple-700 border-purple-200';
-      case 'EDA Tools': return 'bg-gradient-to-r from-violet-50 to-fuchsia-50 text-violet-700 border-violet-200';
-      case 'Manufacturing': return 'bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 border-blue-200';
-      case 'Equipment': return 'bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 border-cyan-200';
-      case 'Materials': return 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 border-green-200';
-      case 'Packaging/Testing': return 'bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 border-amber-200';
-      case 'End Products': return 'bg-gradient-to-r from-red-50 to-rose-50 text-red-700 border-red-200';
-      default: return 'bg-gray-50 text-gray-700 border-gray-200';
-    }
-  };
-
   const clearFilters = () => {
     setSearch('');
     setSector('');
@@ -90,43 +77,39 @@ export function CompanyList() {
   const hasActiveFilters = search || sector || stage;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-px">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-[2rem] p-10 text-white relative overflow-hidden shadow-2xl">
-        {/* Animated background */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA2MCAwIEwgMCAwIDAgNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')]" />
-        </div>
-        
-        {/* Glow */}
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-purple-400/30 rounded-full blur-3xl" />
-        
-        <div className="relative">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="p-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
-              <Building2 className="w-8 h-8" />
-            </div>
-            <div>
-              <span className="text-sm font-semibold text-gray-400">Industry Directory</span>
-              <h1 className="text-4xl font-bold tracking-tight mt-1">半导体企业列表</h1>
+      <div className="bg-[var(--bg-primary)] px-8 py-16 border-b border-[var(--border-color)]">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-2 h-2 bg-[var(--accent)] rounded-full" />
+            <span className="text-xs text-[var(--text-secondary)] uppercase tracking-widest font-medium">Industry Directory</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold text-[var(--text-primary)] tracking-tight leading-[1.1]">
+            Companies
+          </h1>
+          <div className="flex items-center gap-6 mt-8">
+            <div className="flex items-center gap-3">
+              <Building2 size={16} className="text-[var(--text-secondary)]" />
+              <span className="font-bold text-[var(--text-primary)]">{total}</span>
+              <span className="text-[var(--text-secondary)] text-sm">companies</span>
             </div>
           </div>
-          <p className="text-gray-400 text-lg">浏览完整的半导体产业链企业</p>
         </div>
       </div>
 
-      {/* Filters - Apple Glass Card */}
-      <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg shadow-black/5 border border-black/5 p-5">
-        <div className="flex flex-col lg:flex-row gap-4 items-center">
+      {/* Filters */}
+      <div className="bg-[var(--bg-secondary)] px-8 py-5 border-b border-[var(--border-color)]">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-4 items-center">
           {/* Search */}
           <div className="relative flex-1 w-full">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" />
             <input
               type="text"
               placeholder="Search companies..."
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="w-full pl-11 pr-4 py-3.5 bg-gray-100/80 border-2 border-transparent rounded-2xl text-sm focus:outline-none focus:bg-white focus:border-violet-300 focus:ring-4 focus:ring-violet-500/10 transition-all duration-200"
+              className="w-full pl-10 pr-4 py-3 bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-primary)] text-sm focus:outline-none focus:border-[var(--border-color-hover)] transition-colors placeholder:text-[var(--text-secondary)]"
             />
           </div>
 
@@ -134,7 +117,7 @@ export function CompanyList() {
           <select
             value={sector}
             onChange={(e) => { setSector(e.target.value); setPage(1); }}
-            className="px-5 py-3.5 bg-gray-100/80 border-2 border-transparent rounded-2xl text-sm focus:outline-none focus:bg-white focus:border-violet-300 focus:ring-4 focus:ring-violet-500/10 cursor-pointer transition-all duration-200 min-w-[160px]"
+            className="px-4 py-3 bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-primary)] text-sm focus:outline-none cursor-pointer transition-colors min-w-[160px]"
           >
             <option value="">All Sectors</option>
             {sectors.map((s) => (
@@ -146,7 +129,7 @@ export function CompanyList() {
           <select
             value={stage}
             onChange={(e) => { setStage(e.target.value); setPage(1); }}
-            className="px-5 py-3.5 bg-gray-100/80 border-2 border-transparent rounded-2xl text-sm focus:outline-none focus:bg-white focus:border-violet-300 focus:ring-4 focus:ring-violet-500/10 cursor-pointer transition-all duration-200 min-w-[180px]"
+            className="px-4 py-3 bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-primary)] text-sm focus:outline-none cursor-pointer transition-colors min-w-[180px]"
           >
             <option value="">All Supply Chain Stages</option>
             {stages.map((s) => (
@@ -158,7 +141,8 @@ export function CompanyList() {
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="flex items-center gap-2 px-5 py-3.5 bg-red-50 text-red-600 rounded-2xl text-sm font-semibold hover:bg-red-100 transition-colors"
+              className="flex items-center gap-2 px-4 py-3 text-[var(--accent)] text-sm font-semibold hover:bg-[var(--accent-bg)] transition-colors border border-[var(--accent)]"
+              style={{ backgroundColor: 'var(--accent-bg)', borderColor: 'var(--accent)' }}
             >
               <X size={16} />
               Clear
@@ -166,187 +150,179 @@ export function CompanyList() {
           )}
 
           {/* View Mode Toggle */}
-          <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl">
+          <div className="flex items-center gap-1 bg-[var(--bg-primary)] p-1 border border-[var(--border-color)]">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2.5 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-white shadow-md text-violet-600' : 'text-gray-500 hover:text-gray-700'}`}
+              className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-[var(--text-primary)] text-[var(--bg-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
             >
-              <Grid size={18} />
+              <Grid size={16} />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2.5 rounded-lg transition-all ${viewMode === 'list' ? 'bg-white shadow-md text-violet-600' : 'text-gray-500 hover:text-gray-700'}`}
+              className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-[var(--text-primary)] text-[var(--bg-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
             >
-              <List size={18} />
+              <List size={16} />
             </button>
           </div>
         </div>
       </div>
 
       {/* Results info */}
-      <div className="flex items-center justify-between px-2">
-        <div className="flex items-center gap-3">
-          <Sparkles className="w-5 h-5 text-violet-500" />
-          <p className="text-sm text-gray-500">
-            Showing <span className="font-bold text-gray-900">{companies.length}</span> of <span className="font-bold text-violet-600">{total}</span> companies
-          </p>
+      <div className="bg-[var(--bg-primary)] px-8 py-4 border-b border-[var(--border-color)]">
+        <div className="max-w-6xl mx-auto flex items-center gap-2">
+          <span className="text-sm text-[var(--text-secondary)]">
+            Showing <span className="font-bold text-[var(--text-primary)]">{companies.length}</span> of <span className="font-bold text-[var(--text-primary)]">{total}</span> companies
+          </span>
         </div>
       </div>
 
       {/* Loading */}
       {loading && (
-        <div className="flex flex-col items-center justify-center h-80 gap-6">
-          <div className="relative">
-            <div className="w-20 h-20 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin" />
-            <Sparkles className="absolute inset-0 m-auto w-8 h-8 text-violet-600 animate-pulse" />
-          </div>
-          <p className="text-gray-600 font-semibold text-lg">Loading companies...</p>
+        <div className="flex flex-col items-center justify-center h-64 gap-4 bg-[var(--bg-primary)]">
+          <div className="w-8 h-8 border border-[var(--border-color)] border-t-[var(--text-primary)] rounded-full animate-spin" />
+          <p className="text-[var(--text-secondary)] text-sm font-medium">Loading companies...</p>
         </div>
       )}
 
       {/* Error */}
       {error && (
-        <div className="apple-alert apple-alert-error">
-          <div className="flex-1">
-            <h3 className="font-semibold mb-1">Error</h3>
-            <p className="text-sm opacity-80">{error}</p>
+        <div className="bg-[var(--bg-primary)] px-8 py-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)] p-6">
+              <p className="text-[var(--text-primary)] font-medium">{error}</p>
+            </div>
           </div>
         </div>
       )}
 
       {/* Company Grid/List */}
       {!loading && !error && (
-        <>
-          {companies.length === 0 ? (
-            <div className="bg-white/95 backdrop-blur-xl rounded-2xl border border-black/5 p-16 text-center shadow-lg">
-              <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <Building2 size={40} className="text-gray-300" />
+        <div className="bg-[var(--bg-primary)] px-8 py-10">
+          <div className="max-w-6xl mx-auto">
+            {companies.length === 0 ? (
+              <div className="text-center py-20">
+                <Building2 size={40} className="text-[var(--text-faint)] mx-auto mb-4" />
+                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">No companies found</h3>
+                <p className="text-sm text-[var(--text-secondary)] mb-6">Try adjusting your search or filters</p>
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearFilters}
+                    className="px-6 py-3 bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold text-sm hover:opacity-90 transition-opacity"
+                  >
+                    Clear Filters
+                  </button>
+                )}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">No companies found</h3>
-              <p className="text-gray-500 mb-6">Try adjusting your search or filters</p>
-              {hasActiveFilters && (
-                <button
-                  onClick={clearFilters}
-                  className="px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all"
-                >
-                  Clear Filters
-                </button>
-              )}
-            </div>
-          ) : (
-            <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 animate-stagger' : 'space-y-4'}>
-              {companies.map((company) => (
-                <Link
-                  key={company.id}
-                  to={`/companies/${company.id}`}
-                  className={`
-                    group bg-white/95 backdrop-blur-xl rounded-2xl p-6 
-                    shadow-lg shadow-black/5 border border-black/5 
-                    hover:shadow-xl hover:-translate-y-2 
-                    transition-all duration-300
-                    ${viewMode === 'list' ? 'flex items-center gap-6' : ''}
-                  `}
-                >
-                  <div className={viewMode === 'grid' ? 'mb-4' : 'flex-shrink-0'}>
-                    <div className="w-14 h-14 bg-gradient-to-br from-violet-500 via-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                      <Building2 size={26} className="text-white" />
-                    </div>
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-gray-900 text-lg group-hover:text-violet-600 transition-colors line-clamp-1">
-                      {company.name}
-                    </h3>
-                    {company.headquarters && (
-                      <p className="text-sm text-gray-400 flex items-center gap-1.5 mt-1">
-                        <MapPin size={12} />
-                        {company.headquarters}
-                      </p>
-                    )}
-
-                    {company.supply_chain_stage && (
-                      <span className={`inline-block px-3 py-1.5 text-xs font-bold rounded-xl border mt-3 ${getStageColor(company.supply_chain_stage)}`}>
-                        {company.supply_chain_stage}
-                      </span>
-                    )}
-
-                    <div className={`grid gap-3 mt-4 pt-4 border-t border-gray-100 ${viewMode === 'list' ? 'grid-cols-2' : 'grid-cols-2'}`}>
-                      <div className="flex items-center gap-2.5">
-                        <div className="p-2 bg-green-50 rounded-xl">
-                          <DollarSign size={16} className="text-green-600" />
-                        </div>
-                        <span className="text-sm font-semibold text-gray-700">{formatCurrency(company.revenue)}</span>
+            ) : (
+              <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3' : 'space-y-3'}>
+                {companies.map((company) => (
+                  <Link
+                    key={company.id}
+                    to={`/companies/${company.id}`}
+                    className={`
+                      group bg-[var(--bg-secondary)] border border-[var(--border-color)] p-6 
+                      hover:border-[var(--border-color-hover)] 
+                      transition-colors
+                      ${viewMode === 'list' ? 'flex items-center gap-5' : ''}
+                    `}
+                  >
+                    <div className={viewMode === 'grid' ? 'mb-5' : 'flex-shrink-0'}>
+                      <div className="w-12 h-12 bg-[var(--bg-hover)] rounded-lg flex items-center justify-center group-hover:bg-[var(--bg-hover)] transition-colors">
+                        <Building2 size={22} className="text-[var(--text-secondary)]" />
                       </div>
-                      <div className="flex items-center gap-2.5">
-                        <div className="p-2 bg-blue-50 rounded-xl">
-                          <Users size={16} className="text-blue-600" />
-                        </div>
-                        <span className="text-sm font-semibold text-gray-700">
-                          {company.employees ? company.employees.toLocaleString() : '-'}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-[var(--text-primary)] group-hover:text-[var(--text-secondary)] transition-colors line-clamp-1 text-base">
+                        {company.name}
+                      </h3>
+                      {company.headquarters && (
+                        <p className="text-sm text-[var(--text-secondary)] flex items-center gap-1.5 mt-2">
+                          <MapPin size={12} />
+                          {company.headquarters}
+                        </p>
+                      )}
+
+                      {company.supply_chain_stage && (
+                        <span className="inline-block px-2.5 py-1 text-xs font-semibold mt-3 bg-[var(--bg-hover)] text-[var(--text-secondary)]">
+                          {company.supply_chain_stage}
                         </span>
+                      )}
+
+                      <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-[var(--border-color)]">
+                        <div className="flex items-center gap-2">
+                          <DollarSign size={14} className="text-[var(--text-faint)]" />
+                          <span className="text-sm font-semibold text-[var(--text-secondary)]">{formatCurrency(company.revenue)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Users size={14} className="text-[var(--text-faint)]" />
+                          <span className="text-sm font-semibold text-[var(--text-secondary)]">
+                            {company.employees ? company.employees.toLocaleString() : '-'}
+                          </span>
+                        </div>
                       </div>
+
+                      {company.sector && (
+                        <p className="text-xs text-[var(--text-faint)] mt-3 truncate">{company.sector}</p>
+                      )}
                     </div>
-
-                    {company.sector && (
-                      <p className="text-xs text-gray-400 mt-3 truncate">{company.sector}</p>
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-
-          {/* Pagination - Apple Style */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-3 pt-6">
-              <button
-                onClick={() => setPage(p => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className="p-3 bg-white/95 backdrop-blur-xl rounded-2xl border border-black/5 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:shadow-lg transition-all duration-200"
-              >
-                <ChevronLeft size={22} className="text-gray-600" />
-              </button>
-              
-              <div className="flex items-center gap-2">
-                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                  let pageNum;
-                  if (totalPages <= 5) {
-                    pageNum = i + 1;
-                  } else if (page <= 3) {
-                    pageNum = i + 1;
-                  } else if (page >= totalPages - 2) {
-                    pageNum = totalPages - 4 + i;
-                  } else {
-                    pageNum = page - 2 + i;
-                  }
-                  return (
-                    <button
-                      key={pageNum}
-                      onClick={() => setPage(pageNum)}
-                      className={`
-                        w-12 h-12 rounded-xl font-bold text-sm transition-all duration-200
-                        ${page === pageNum
-                          ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg shadow-violet-500/30'
-                          : 'bg-white/95 backdrop-blur-xl text-gray-600 hover:bg-white hover:shadow-md border border-black/5'
-                        }
-                      `}
-                    >
-                      {pageNum}
-                    </button>
-                  );
-                })}
+                  </Link>
+                ))}
               </div>
-              
-              <button
-                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className="p-3 bg-white/95 backdrop-blur-xl rounded-2xl border border-black/5 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:shadow-lg transition-all duration-200"
-              >
-                <ChevronRight size={22} className="text-gray-600" />
-              </button>
-            </div>
-          )}
-        </>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 pt-8">
+                <button
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="p-2.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] disabled:opacity-30 disabled:cursor-not-allowed hover:border-[var(--border-color-hover)] transition-colors"
+                >
+                  <ChevronLeft size={20} className="text-[var(--text-secondary)]" />
+                </button>
+                
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (page <= 3) {
+                      pageNum = i + 1;
+                    } else if (page >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = page - 2 + i;
+                    }
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => setPage(pageNum)}
+                        className={`
+                          w-10 h-10 font-semibold text-sm transition-colors
+                          ${page === pageNum
+                            ? 'bg-[var(--text-primary)] text-[var(--bg-primary)]'
+                            : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)] hover:border-[var(--border-color-hover)]'
+                          }
+                        `}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                <button
+                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                  className="p-2.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] disabled:opacity-30 disabled:cursor-not-allowed hover:border-[var(--border-color-hover)] transition-colors"
+                >
+                  <ChevronRight size={20} className="text-[var(--text-secondary)]" />
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Sidebar } from './components/layout/Sidebar';
 import { Dashboard } from './pages/Dashboard';
 import { CompanyList } from './components/company/CompanyList';
@@ -11,18 +12,26 @@ import { ChatAssistant } from './components/chat/ChatAssistant';
 import { News } from './pages/News';
 
 function App() {
+  const [theme, setTheme] = useState<'dark' | 'light'>(
+    () => localStorage.getItem('theme') as 'dark' | 'light' || 'dark'
+  );
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <BrowserRouter>
-      <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50">
-        <Sidebar />
+      <div className="flex min-h-screen" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+        <Sidebar theme={theme} onToggleTheme={toggleTheme} />
         <main className="flex-1 flex flex-col min-w-0">
-          {/* Top Navigation Bar */}
-          <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/70 border-b border-black/5">
-            <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-          </div>
-          
           {/* Main Content Area */}
-          <div className="flex-1 p-6 lg:p-8 overflow-auto">
+          <div className="flex-1 overflow-auto">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/companies" element={<CompanyList />} />
@@ -37,10 +46,10 @@ function App() {
           </div>
           
           {/* Footer */}
-          <footer className="border-t border-black/5 bg-white/50 backdrop-blur-sm py-4 px-6 lg:px-8">
-            <div className="flex items-center justify-between text-xs text-gray-400">
+          <footer className="border-t py-4 px-8" style={{ borderColor: 'var(--border-color)' }}>
+            <div className="flex items-center justify-between text-xs" style={{ color: 'var(--text-secondary)' }}>
               <span>© 2024 Industry Insight Platform. Semiconductor Supply Chain Intelligence.</span>
-              <span>Powered by SemiKong Ontology</span>
+              <span>Powered by WANGFENG</span>
             </div>
           </footer>
         </main>
